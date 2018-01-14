@@ -1,6 +1,11 @@
-class Room {
-  const Room(this.id, this.name);
+import 'package:droidkaigi2018/models/category_item.dart';
 
-  final int id;
-  final String name;
+class Room extends CategoryItem {
+  final int sort;
+
+  const Room(id, name, this.sort) : super(id, name);
+
+  static Room fromJson(json) {
+    return new Room(json['id'], json['name'], json['sort']);
+  }
 }

@@ -1,6 +1,5 @@
-class Topic {
-  const Topic(this.id, this.name);
+import 'package:droidkaigi2018/models/category_item.dart';
 
-  final int id;
-  final String name;
+class Topic extends CategoryItem {
+  const Topic(id, name) : super(id, name);
 }

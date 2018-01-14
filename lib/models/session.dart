@@ -1,3 +1,4 @@
+import 'package:droidkaigi2018/models/category_item.dart';
 import 'package:droidkaigi2018/models/duration_type.dart';
 import 'package:droidkaigi2018/models/language.dart';
 import 'package:droidkaigi2018/models/level.dart';
@@ -34,4 +35,52 @@ class Session {
   final Topic topic;
   final Level level;
   final Language language;
+
+  static fromJson(
+      json, Map<int, Map<int, CategoryItem>> categoryMap, Map<int, Room> roomMap) {
+    var sessionId = json['id'];
+    var title = json['title'];
+    var description = json['description'];
+    var startsAt = DateTime.parse(json['startsAt']);
+    var endsAt = DateTime.parse(json['endsAt']);
+    var isServiceSession = json['isServiceSession'];
+    var isPlenumSession = json['isPlenumSession'];
+    var speakers = [];
+    var room = roomMap[json['roomId']];
+
+    DurationType durationType;
+    Level level;
+    Language language;
+    Topic topic;
+
+    for (var itemId in json['categoryItems']) {
+      if (durationType == null) {
+        durationType = categoryMap[CategoryItem.DURATION_TYPE_ID][itemId];
+      }
+      if (level == null) {
+        level = categoryMap[CategoryItem.LEVEL_ID][itemId];
+      }
+      if (language == null) {
+        language = categoryMap[CategoryItem.LANGUAGE_ID][itemId];
+      }
+      if (topic == null) {
+        topic = categoryMap[CategoryItem.TOPIC_ID][itemId];
+      }
+    }
+
+    return new Session(
+        sessionId,
+        title,
+        description,
+        startsAt,
+        endsAt,
+        isServiceSession,
+        isPlenumSession,
+        speakers,
+        room,
+        durationType,
+        topic,
+        level,
+        language);
+  }
 }

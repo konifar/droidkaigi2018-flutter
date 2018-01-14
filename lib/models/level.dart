@@ -1,6 +1,5 @@
-class Level {
-  const Level(this.id, this.name);
+import 'package:droidkaigi2018/models/category_item.dart';
 
-  final int id;
-  final String name;
+class Level extends CategoryItem {
+  const Level(id, name) : super(id, name);
 }
