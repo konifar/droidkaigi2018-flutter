@@ -1,17 +1,17 @@
 import 'dart:async';
 
-import 'package:dice/dice.dart';
 import 'package:droidkaigi2018/api/droidkaigi_api.dart';
 import 'package:droidkaigi2018/models/session.dart';
 import 'package:droidkaigi2018/repository/session_repository.dart';
 
 class SessionRepositoryImpl implements SessionRepository {
-  @inject
   DroidKaigiApi _api;
 
   Map<int, Session> _cache = new Map();
 
-  bool isDirty;
+  bool isDirty = true;
+
+  SessionRepositoryImpl(this._api, this._cache);
 
   @override
   Future<Map<int, Session>> findAll() {
@@ -20,6 +20,7 @@ class SessionRepositoryImpl implements SessionRepository {
     }
     return _api.getSessions().then((sessions) {
       isDirty = false;
+      return sessions;
     });
   }
 
@@ -30,6 +31,7 @@ class SessionRepositoryImpl implements SessionRepository {
     }
     return _api.getSessions().then((sessions) => sessions[id]).then((session) {
       isDirty = false;
+      return session;
     });
   }
 }

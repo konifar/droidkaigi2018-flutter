@@ -4,10 +4,8 @@ import 'package:droidkaigi2018/di/repository_module.dart';
 import 'package:droidkaigi2018/repository/session_repository.dart';
 
 main() async {
-  var injector =
-      new Injector.fromModules([new ApiModule(), new RepositoryModule()]);
 
-  SessionRepository repository = injector.getInstance(SessionRepository);
+  SessionRepository repository = new
 
   var sessions = await repository.findAll();
 
