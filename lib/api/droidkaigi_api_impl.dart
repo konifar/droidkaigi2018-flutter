@@ -22,6 +22,12 @@ class DroidKaigiApiImpl implements DroidKaigiApi {
     return _sessionMap;
   }
 
+  @override
+  Future<Map<String, Speaker>> getSpeakers() async {
+    await _requestAll();
+    return _speakerMap;
+  }
+
   _requestAll() async {
     var response = await http.read("$_BASE_URL/all.json");
     var json = JSON.decode(response);
