@@ -5,7 +5,6 @@ final ThemeData themeData = new ThemeData(
     cardColor: Colors.white,
     dividerColor: Colors.grey[300],
     backgroundColor: Colors.grey[100],
-    primarySwatch: DroidKaigiColors.theme[500],
     primaryColor: DroidKaigiColors.theme[500],
     primaryColorBrightness: Brightness.light,
     accentColor: DroidKaigiColors.accent[500]);
