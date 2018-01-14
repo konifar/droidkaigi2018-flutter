@@ -1,11 +1,11 @@
-import "package:dice/dice.dart";
-import 'package:droidkaigi2018/di/api_module.dart';
-import 'package:droidkaigi2018/di/repository_module.dart';
+import 'package:droidkaigi2018/api/droidkaigi_api.dart';
+import 'package:droidkaigi2018/api/droidkaigi_api_impl.dart';
 import 'package:droidkaigi2018/repository/session_repository.dart';
+import 'package:droidkaigi2018/repository/session_repository_impl.dart';
 
 main() async {
-
-  SessionRepository repository = new
+  DroidKaigiApi api = new DroidKaigiApiImpl();
+  SessionRepository repository = new SessionRepositoryImpl(api, new Map());
 
   var sessions = await repository.findAll();
 
