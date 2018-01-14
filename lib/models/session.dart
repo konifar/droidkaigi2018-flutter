@@ -22,7 +22,7 @@ class Session {
       this.level,
       this.language);
 
-  final int id;
+  final String id;
   final String title;
   final String description;
   final DateTime startsAt;
@@ -36,8 +36,8 @@ class Session {
   final Level level;
   final Language language;
 
-  static fromJson(
-      json, Map<int, Map<int, CategoryItem>> categoryMap, Map<int, Room> roomMap) {
+  static fromJson(json, Map<int, Map<int, CategoryItem>> categoryMap,
+      Map<int, Room> roomMap) {
     var sessionId = json['id'];
     var title = json['title'];
     var description = json['description'];
@@ -55,16 +55,24 @@ class Session {
 
     for (var itemId in json['categoryItems']) {
       if (durationType == null) {
-        durationType = categoryMap[CategoryItem.DURATION_TYPE_ID][itemId];
+        if (categoryMap[CategoryItem.DURATION_TYPE_ID] != null) {
+          durationType = categoryMap[CategoryItem.DURATION_TYPE_ID][itemId];
+        }
       }
       if (level == null) {
-        level = categoryMap[CategoryItem.LEVEL_ID][itemId];
+        if (categoryMap[CategoryItem.LEVEL_ID] != null) {
+          level = categoryMap[CategoryItem.LEVEL_ID][itemId];
+        }
       }
       if (language == null) {
-        language = categoryMap[CategoryItem.LANGUAGE_ID][itemId];
+        if (categoryMap[CategoryItem.LANGUAGE_ID] != null) {
+          language = categoryMap[CategoryItem.LANGUAGE_ID][itemId];
+        }
       }
       if (topic == null) {
-        topic = categoryMap[CategoryItem.TOPIC_ID][itemId];
+        if (categoryMap[CategoryItem.TOPIC_ID] != null) {
+          topic = categoryMap[CategoryItem.TOPIC_ID][itemId];
+        }
       }
     }
 
