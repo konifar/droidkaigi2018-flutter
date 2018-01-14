@@ -1,6 +1,5 @@
-class DurationType {
-  const DurationType(this.id, this.name);
+import 'package:droidkaigi2018/models/category.dart';
 
-  final int id;
-  final String name;
+class DurationType extends Category {
+  const DurationType(id, name) : super(id, name);
 }

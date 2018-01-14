@@ -1,6 +1,5 @@
-class Language {
-  const Language(this.id, this.name);
+import 'package:droidkaigi2018/models/category.dart';
 
-  final int id;
-  final String name;
+class Language extends Category {
+  const Language(id, name) : super(id, name);
 }
