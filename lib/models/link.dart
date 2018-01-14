@@ -14,13 +14,13 @@ class Link {
         return new Link(LinkType.linkedIn, url);
       case "Company_Website":
         return new Link(LinkType.companyWebSite, url);
-      case "Other":
+      default:
         return new Link(LinkType.other, url);
     }
   }
 
   static fromJson(json) {
-    return _fromType(json['linkType'], json['title']);
+    return _fromType(json['linkType'], json['url']);
   }
 }
 
