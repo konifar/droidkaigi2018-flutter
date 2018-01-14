@@ -11,19 +11,25 @@ class SessionRepositoryImpl implements SessionRepository {
 
   Map<int, Session> _cache = new Map();
 
+  bool isDirty;
+
   @override
   Future<Map<int, Session>> findAll() {
-    if (_cache.isNotEmpty) {
+    if (!isDirty && _cache.isNotEmpty) {
       return new Future.value(_cache);
     }
-    return _api.getSessions();
+    return _api.getSessions().then((sessions) {
+      isDirty = false;
+    });
   }
 
   @override
   Future<Session> find(int id) {
-    if (_cache.containsKey(id)) {
+    if (!isDirty && _cache.containsKey(id)) {
       return new Future.value(_cache[id]);
     }
-    return _api.getSessions().then((sessions) => sessions[id]);
+    return _api.getSessions().then((sessions) => sessions[id]).then((session) {
+      isDirty = false;
+    });
   }
 }
