@@ -1,0 +1,67 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:droidkaigi2018/api/droidkaigi_api.dart';
+import 'package:droidkaigi2018/models/category_item.dart';
+import 'package:droidkaigi2018/models/room.dart';
+import 'package:droidkaigi2018/models/session.dart';
+import 'package:droidkaigi2018/models/speaker.dart';
+import 'package:http/http.dart' as http;
+
+class DroidKaigiApiImpl implements DroidKaigiApi {
+  static const _BASE_URL = 'https://droidkaigi.jp/2018/sessionize';
+
+  var _categoryMap = new Map<int, Map<int, CategoryItem>>();
+  var _roomMap = new Map<int, Room>();
+  var _sessionMap = new Map<int, Session>();
+  var _speakerMap = new Map<String, Speaker>();
+
+  @override
+  Future<Map<int, Session>> getSessions() async {
+    await _requestAll();
+    return _sessionMap;
+  }
+
+  _requestAll() async {
+    var response = await http.read("$_BASE_URL/all.json");
+    var json = JSON.decode(response);
+
+    // Category
+    var categories = json['categories'];
+    for (var category in categories) {
+      var categoryId = category['id'];
+      Map itemMap = new Map<int, CategoryItem>();
+
+      for (var item in category['items']) {
+        itemMap[item['id']] = CategoryItem.fromJson(item, categoryId);
+      }
+      _categoryMap[categoryId] = itemMap;
+    }
+
+    // Room
+    var rooms = json['rooms'];
+    for (var room in rooms) {
+      _roomMap[room['id']] = Room.fromJson(room);
+    }
+
+    // Session
+    var sessions = json['sessions'];
+    for (var session in sessions) {
+      _sessionMap[session['id']] =
+          Session.fromJson(session, _categoryMap, _roomMap);
+    }
+
+    // Speaker
+    var speakers = json['speakers'];
+    for (var speaker in speakers) {
+      _speakerMap[speaker['id']] = Speaker.fromJson(speaker, _sessionMap);
+    }
+
+    // Fill speakers in sessions
+    for (var session in sessions) {
+      for (var speakerId in session['speakers']) {
+        _sessionMap[session['id']].speakers.add(_speakerMap[speakerId]);
+      }
+    }
+  }
+}
