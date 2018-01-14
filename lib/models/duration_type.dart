@@ -1,5 +1,5 @@
-import 'package:droidkaigi2018/models/category.dart';
+import 'package:droidkaigi2018/models/category_item.dart';
 
-class DurationType extends Category {
+class DurationType extends CategoryItem {
   const DurationType(id, name) : super(id, name);
 }

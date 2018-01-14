@@ -1,5 +1,5 @@
-import 'package:droidkaigi2018/models/category.dart';
+import 'package:droidkaigi2018/models/category_item.dart';
 
-class Topic extends Category {
+class Topic extends CategoryItem {
   const Topic(id, name) : super(id, name);
 }

@@ -1,6 +1,6 @@
-import 'package:droidkaigi2018/models/category.dart';
+import 'package:droidkaigi2018/models/category_item.dart';
 
-class Room extends Category {
+class Room extends CategoryItem {
   final int sort;
 
   const Room(id, name, this.sort) : super(id, name);
