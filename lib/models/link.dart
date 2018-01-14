@@ -4,8 +4,8 @@ class Link {
   final LinkType type;
   final String url;
 
-  static fromType(String linkType, String url) {
-    switch(linkType) {
+  static _fromType(String linkType, String url) {
+    switch (linkType) {
       case "Twitter":
         return new Link(LinkType.twitter, url);
       case "Blog":
@@ -17,6 +17,10 @@ class Link {
       case "Other":
         return new Link(LinkType.other, url);
     }
+  }
+
+  static fromJson(json) {
+    return _fromType(json['linkType'], json['title']);
   }
 }
 
