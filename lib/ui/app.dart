@@ -2,12 +2,16 @@ import 'dart:async';
 
 import 'package:droidkaigi2018/i18n/strings.dart';
 import 'package:droidkaigi2018/theme.dart';
+import 'package:droidkaigi2018/ui/drawer.dart';
+import 'package:droidkaigi2018/ui/pages/all_sessions.dart';
+import 'package:droidkaigi2018/ui/pages/my_schedule.dart';
+import 'package:droidkaigi2018/ui/pages/page_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-class _DroidKaigiLocalizationsDelegate extends LocalizationsDelegate<Strings> {
-  const _DroidKaigiLocalizationsDelegate();
+class _MyLocalizationsDelegate extends LocalizationsDelegate<Strings> {
+  const _MyLocalizationsDelegate();
 
   @override
   bool isSupported(Locale locale) => ['en', 'ja'].contains(locale.languageCode);
@@ -16,7 +20,7 @@ class _DroidKaigiLocalizationsDelegate extends LocalizationsDelegate<Strings> {
   Future<Strings> load(Locale locale) => Strings.load(locale);
 
   @override
-  bool shouldReload(_DroidKaigiLocalizationsDelegate old) => false;
+  bool shouldReload(_MyLocalizationsDelegate old) => false;
 }
 
 class MyApp extends StatelessWidget {
@@ -26,7 +30,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       onGenerateTitle: (BuildContext context) => Strings.of(context).appName,
       localizationsDelegates: [
-        const _DroidKaigiLocalizationsDelegate(),
+        const _MyLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
@@ -52,14 +56,16 @@ class MyHomePage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
+  String title;
 
   @override
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   int _counter = 0;
+  int _currentIndex = 0;
+  List<PageContainer> _pages;
 
   void _incrementCounter() {
     setState(() {
@@ -72,6 +78,44 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  List<PageContainer> _createPages() {
+    return <PageContainer>[
+      new PageContainer(
+        title: Strings.of(context).allSessions,
+        icon: new Icon(Icons.event_note),
+        hasTab: true,
+        body: new AllSessionsPage(),
+        tickerProvider: this,
+      ),
+      new PageContainer(
+        title: Strings.of(context).mySchedule,
+        icon: new Icon(Icons.schedule),
+        hasTab: false,
+        body: new MySchedulePage(),
+        tickerProvider: this,
+      ),
+    ];
+  }
+
+  Widget _buildTransitionsStack() {
+    final List<FadeTransition> transitions = <FadeTransition>[];
+
+    for (PageContainer container in _pages) {
+      transitions.add(container.transition());
+    }
+
+    // We want to have the newly animating (fading in) views on top.
+    transitions.sort((FadeTransition a, FadeTransition b) {
+      final Animation<double> aAnimation = a.listenable;
+      final Animation<double> bAnimation = b.listenable;
+      final double aValue = aAnimation.value;
+      final double bValue = bAnimation.value;
+      return aValue.compareTo(bValue);
+    });
+
+    return new Stack(children: transitions);
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -80,40 +124,37 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
+    _pages = _createPages();
+
+//    for (PageContainer container in _pages) {
+//      container.controller.addListener(_rebuild);
+//    }
+
+    PageContainer _page = _pages[_currentIndex];
+    _page.controller.value = 1.0;
+    widget.title = _page.title;
+
     return new Scaffold(
       appBar: new AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: new Text(Strings.of(context).appName),
+        title: new Text(widget.title),
+      ),
+      drawer: new MyDrawer(
+        items: _pages,
+        currentIndex: _currentIndex,
+        onTap: (int index) {
+          setState(() {
+            _page.controller.reverse();
+            _currentIndex = index;
+            _page.controller.forward();
+            widget.title = _page.title;
+          });
+        },
       ),
       body: new Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: new Column(
-          // Column is also layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug paint" (press "p" in the console where you ran
-          // "flutter run", or select "Toggle Debug Paint" from the Flutter tool
-          // window in IntelliJ) to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Text(
-              'You have pushed the button this many times:',
-            ),
-            new Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
+        child: _buildTransitionsStack(),
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: _incrementCounter,
