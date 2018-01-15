@@ -1,0 +1,43 @@
+{
+  "@@last_modified": "2018-01-15T03:07:11.397592",
+  "appName": "DroidKaigi 2018",
+  "@appName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "allSessions": "All Sessions",
+  "@allSessions": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mySchedule": "My Schedule",
+  "@mySchedule": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "map": "Map",
+  "@map": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "settings": "Settings",
+  "@settings": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "sponsors": "Sponsors",
+  "@sponsors": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "questionnaire": "Quesionnaire",
+  "@questionnaire": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "about": "About",
+  "@about": {
+    "type": "text",
+    "placeholders": {}
+  }
+}
