@@ -59,7 +59,7 @@ class AllSessionsPageState extends State<AllSessionsPage>
       body: new TabBarView(
         controller: _controller,
         children: _rooms.map((Room room) {
-          return new SessionsPage();
+          return new RoomSessionsPage(room.id);
         }).toList(),
       ),
     );

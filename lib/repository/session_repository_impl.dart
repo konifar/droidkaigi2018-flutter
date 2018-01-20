@@ -20,6 +20,7 @@ class SessionRepositoryImpl implements SessionRepository {
     }
     return _api.getSessions().then((sessions) {
       isDirty = false;
+      _cache = sessions;
       return sessions.values.toList();
     });
   }
@@ -29,7 +30,10 @@ class SessionRepositoryImpl implements SessionRepository {
     if (!isDirty && _cache.containsKey(id)) {
       return new Future.value(_cache[id]);
     }
-    return _api.getSessions().then((sessions) => sessions[id]).then((session) {
+    return _api.getSessions().then((sessions) {
+      _cache = sessions;
+      return sessions[id];
+    }).then((session) {
       isDirty = false;
       return session;
     });

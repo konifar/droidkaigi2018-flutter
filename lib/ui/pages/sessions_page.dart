@@ -3,13 +3,20 @@ import 'package:droidkaigi2018/repository/repository_factory.dart';
 import 'package:droidkaigi2018/ui/pages/session_item.dart';
 import 'package:flutter/material.dart';
 
-class SessionsPage extends StatefulWidget {
+class RoomSessionsPage extends StatefulWidget {
+  final int roomId;
+
+  RoomSessionsPage(this.roomId);
+
   @override
-  _SessionsPageState createState() => new _SessionsPageState();
+  _RoomSessionsPageState createState() => new _RoomSessionsPageState(roomId);
 }
 
-class _SessionsPageState extends State<SessionsPage> {
+class _RoomSessionsPageState extends State<RoomSessionsPage> {
   List<Session> _sessions = [];
+  final int roomId;
+
+  _RoomSessionsPageState(this.roomId);
 
   @override
   void initState() {
@@ -17,7 +24,7 @@ class _SessionsPageState extends State<SessionsPage> {
 
     new RepositoryFactory()
         .getSessionRepository()
-        .findAll()
+        .findByRoom(roomId)
         .then((s) => setSessions(s));
   }
 
