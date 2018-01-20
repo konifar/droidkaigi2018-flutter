@@ -140,6 +140,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: new Text(widget.title),
+        elevation: _page.hasTab ? 0.0 : 4.0,
       ),
       drawer: new MyDrawer(
         items: _pages,
