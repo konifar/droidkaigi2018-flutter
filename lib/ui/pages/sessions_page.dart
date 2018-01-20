@@ -2,6 +2,9 @@ import 'package:droidkaigi2018/models/session.dart';
 import 'package:droidkaigi2018/repository/repository_factory.dart';
 import 'package:droidkaigi2018/ui/pages/session_item.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+final googleSignIn = new GoogleSignIn();
 
 class RoomSessionsPage extends StatefulWidget {
   final int roomId;
@@ -41,7 +44,7 @@ class _RoomSessionsPageState extends State<RoomSessionsPage> {
       children: _sessions.map((Session session) {
         return new Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
-          child: new SessionsItem(session),
+          child: new SessionsItem(session, googleSignIn),
         );
       }).toList(),
     );

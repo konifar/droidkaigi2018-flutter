@@ -1,21 +1,24 @@
+import 'dart:async';
+
 import 'package:droidkaigi2018/models/session.dart';
 import 'package:droidkaigi2018/models/speaker.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 
 class SessionsItem extends StatefulWidget {
-  SessionsItem(this._session);
+  SessionsItem(this._session, this.googleSignIn);
 
   final Session _session;
 
+  final googleSignIn;
+
   @override
-  _SessionsItemState createState() => new _SessionsItemState(_session);
+  _SessionsItemState createState() => new _SessionsItemState();
 }
 
 class _SessionsItemState extends State<SessionsItem> {
-  Session _session;
-
-  _SessionsItemState(this._session);
+  bool _isFavorited = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +28,17 @@ class _SessionsItemState extends State<SessionsItem> {
     final TextStyle descriptionStyle = theme.textTheme.caption;
     final TextStyle speakerNameStyle = theme.textTheme.body2;
 
+    final Session _session = widget._session;
+
     final formatter =
         new DateFormat.Hm(Localizations.localeOf(context).languageCode);
     final startAt = formatter.format(_session.startsAt);
     final endAt = formatter.format(_session.endsAt);
+
+    Future<Null> _toggleFavorite() async {
+      await _ensureLoggedIn(widget.googleSignIn);
+      setState(() => _isFavorited = !_isFavorited);
+    }
 
     return new Card(
       child: new Padding(
@@ -70,11 +80,19 @@ class _SessionsItemState extends State<SessionsItem> {
               ],
             ),
             new Positioned(
-              bottom: 4.0,
-              right: 4.0,
-              child: new Icon(
-                Icons.favorite_border,
-                color: Colors.grey[500],
+              bottom: -8.0,
+              right: -8.0,
+              child: new IconButton(
+                icon: (_isFavorited
+                    ? new Icon(
+                        Icons.favorite,
+                        color: theme.primaryColor,
+                      )
+                    : new Icon(
+                        Icons.favorite_border,
+                        color: Colors.grey[500],
+                      )),
+                onPressed: _toggleFavorite,
               ),
             ),
           ],
@@ -105,4 +123,14 @@ List<Widget> _createSpeakerRows(
       ),
     );
   }).toList();
+}
+
+Future<Null> _ensureLoggedIn(GoogleSignIn googleSignIn) async {
+  GoogleSignInAccount user = googleSignIn.currentUser;
+  if (user == null) {
+    user = await googleSignIn.signInSilently();
+  }
+  if (user == null) {
+    await googleSignIn.signIn();
+  }
 }

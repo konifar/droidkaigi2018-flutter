@@ -45,5 +45,19 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <!-- reverse url of your client id, for example: -->
+                <string>com.googleusercontent.apps.811516176421-bqv6e8g2dei4ia97n1t3ulbj61n9kmaf</string>
+                <!-- bundle id, for example: -->
+                <string>com.droidkaigi2018</string>
+            </array>
+        </dict>
+    </array>
 </dict>
 </plist>
