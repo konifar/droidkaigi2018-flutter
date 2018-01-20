@@ -1,6 +1,6 @@
-import 'package:droidkaigi2018/api/droidkaigi_api_impl.dart';
 import 'package:droidkaigi2018/models/room.dart';
-import 'package:droidkaigi2018/repository/room_repository_impl.dart';
+import 'package:droidkaigi2018/repository/repository_factory.dart';
+import 'package:droidkaigi2018/ui/pages/sessions_page.dart';
 import 'package:flutter/material.dart';
 
 class AllSessionsPage extends StatefulWidget {
@@ -9,7 +9,7 @@ class AllSessionsPage extends StatefulWidget {
 }
 
 class AllSessionsPageState extends State<AllSessionsPage>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   TabController _controller;
   List<Room> _rooms = [];
 
@@ -17,7 +17,8 @@ class AllSessionsPageState extends State<AllSessionsPage>
   void initState() {
     super.initState();
 
-    new RoomRepositoryImpl(new DroidKaigiApiImpl(), new Map())
+    new RepositoryFactory()
+        .getRoomRepository()
         .findAll()
         .then((r) => setRooms(r.values.toList()));
   }
@@ -58,7 +59,7 @@ class AllSessionsPageState extends State<AllSessionsPage>
       body: new TabBarView(
         controller: _controller,
         children: _rooms.map((Room room) {
-          return new Text(room.name);
+          return new SessionsPage();
         }).toList(),
       ),
     );

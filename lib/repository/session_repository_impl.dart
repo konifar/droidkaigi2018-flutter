@@ -34,4 +34,13 @@ class SessionRepositoryImpl implements SessionRepository {
       return session;
     });
   }
+
+  @override
+  Future<List<Session>> findByRoom(int roomId) {
+    return findAll().then((sessions) {
+      return sessions.values
+          .where((session) => session.room?.id == roomId)
+          .toList();
+    });
+  }
 }

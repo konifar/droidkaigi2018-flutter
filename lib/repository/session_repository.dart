@@ -6,4 +6,6 @@ abstract class SessionRepository {
   Future<Map<int, Session>> findAll();
 
   Future<Session> find(int id);
+
+  Future<List<Session>> findByRoom(int roomId);
 }
