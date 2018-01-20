@@ -11,6 +11,6 @@ void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(new MyApp());
-    await tester.pump(); // https://github.com/flutter/flutter/issues/1865
+//    await tester.pump(); // https://github.com/flutter/flutter/issues/1865
   });
 }
