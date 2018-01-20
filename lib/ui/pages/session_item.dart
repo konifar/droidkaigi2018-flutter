@@ -33,35 +33,50 @@ class _SessionsItemState extends State<SessionsItem> {
     return new Card(
       child: new Padding(
         padding: const EdgeInsets.all(16.0),
-        child: new Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            new Text(
-              "$startAt - $endAt / ${_session.room.name}",
-              style: timeStyle,
+        child: new Stack(
+          children: [
+            new Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                new Text(
+                  "$startAt - $endAt / ${_session.room.name}",
+                  style: timeStyle,
+                ),
+                new Container(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: new Text(_session.title, style: titleStyle)),
+                new DefaultTextStyle(
+                  style: descriptionStyle,
+                  softWrap: false,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                  child: new Padding(
+                    child: new Text(_session.description),
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  ),
+                ),
+                new Text(
+                  _session.topic.name,
+                  style: descriptionStyle,
+                ),
+                new Padding(
+                  child: new Column(
+                    children:
+                        _createSpeakerRows(_session.speakers, speakerNameStyle),
+                  ),
+                  padding: const EdgeInsets.only(top: 8.0),
+                )
+              ],
             ),
-            new Container(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: new Text(_session.title, style: titleStyle)),
-            new DefaultTextStyle(
-              style: descriptionStyle,
-              softWrap: false,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 3,
-              child: new Padding(
-                child: new Text(_session.description),
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+            new Positioned(
+              bottom: 4.0,
+              right: 4.0,
+              child: new Icon(
+                Icons.favorite_border,
+                color: Colors.grey[500],
               ),
             ),
-            new Text(_session.topic.name, style: descriptionStyle),
-            new Padding(
-              child: new Column(
-                children:
-                    _createSpeakerRows(_session.speakers, speakerNameStyle),
-              ),
-              padding: const EdgeInsets.only(top: 8.0),
-            )
           ],
         ),
       ),
