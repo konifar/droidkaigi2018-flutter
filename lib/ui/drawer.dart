@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
 const String _defaultAccountIcon = 'assets/ic_speaker_placeholder.png';
-const String _defaultAccountBackground = 'assets/img_drawer_header.jpg';
+const String _defaultAccountBackground = 'assets/img_drawer_header.png';
 
 class MyDrawer extends StatelessWidget {
   MyDrawer({
@@ -52,7 +52,7 @@ class MyDrawer extends StatelessWidget {
     }
 
     return new Drawer(
-      child: new ListView(
+      child: new Column(
         children: <Widget>[
           new UserAccountsDrawerHeader(
             accountName: new Text(
@@ -61,21 +61,31 @@ class MyDrawer extends StatelessWidget {
             accountEmail: new Text(
               accountEmail != null ? accountEmail : Strings.of(context).appName,
             ),
-            onDetailsPressed: () {
-              // TODO
-            },
             decoration: new BoxDecoration(
               image: new DecorationImage(
                 image: new AssetImage(
                   _defaultAccountBackground,
                 ),
+                fit: BoxFit.cover,
               ),
             ),
+            margin: EdgeInsets.zero,
           ),
-          new Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: lists,
+          new MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: new Expanded(
+              child: new ListView(
+                padding: const EdgeInsets.only(top: 8.0),
+                children: <Widget>[
+                  new Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: lists,
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
