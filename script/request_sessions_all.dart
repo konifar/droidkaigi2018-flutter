@@ -1,15 +1,8 @@
-import 'package:droidkaigi2018/api/droidkaigi_api.dart';
-import 'package:droidkaigi2018/api/droidkaigi_api_impl.dart';
-import 'package:droidkaigi2018/repository/session_repository.dart';
-import 'package:droidkaigi2018/repository/session_repository_impl.dart';
+import 'package:droidkaigi2018/repository/repository_factory.dart';
 
 main() async {
-  DroidKaigiApi api = new DroidKaigiApiImpl();
-  SessionRepository repository = new SessionRepositoryImpl(api, new Map());
-
-  var sessions = await repository.findAll();
-
-  for (var session in sessions.values) {
+  var sessions = await new RepositoryFactory().getSessionRepository().findAll();
+  for (var session in sessions) {
     print(session.title);
   }
 }

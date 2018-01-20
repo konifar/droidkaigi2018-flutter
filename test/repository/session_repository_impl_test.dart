@@ -1,4 +1,5 @@
 import 'package:droidkaigi2018/api/droidkaigi_api.dart';
+import 'package:droidkaigi2018/models/room.dart';
 import 'package:droidkaigi2018/models/session.dart';
 import 'package:droidkaigi2018/repository/session_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,7 +23,7 @@ void main() {
   group("findAll", () {
     test('when isDirty is true, findAll() calls api method.', () async {
       // given
-      when(_api.getSessions()).thenReturn(new Future(() => []));
+      when(_api.getSessions()).thenReturn(new Future(() => {}));
 
       // when
       await _subject.findAll();
@@ -48,7 +49,7 @@ void main() {
 
     test('when cache is empty, findAll() calls api method.', () async {
       // given
-      when(_api.getSessions()).thenReturn(new Future(() => []));
+      when(_api.getSessions()).thenReturn(new Future(() => {}));
       _subject.isDirty = false;
 
       // when
@@ -103,6 +104,36 @@ void main() {
       // then
       await _subject.find(2).then((actual) {
         expect(actual, isNull);
+      });
+    });
+  });
+
+  group("findByRoom", () {
+    test('when one room matches', () async {
+      // given
+      var session = new MockSession();
+      var room = new Room(1, "Room1", 1);
+      when(session.room).thenReturn(room);
+      when(_api.getSessions()).thenReturn(new Future(() => {1: session}));
+
+      // when
+      // then
+      await _subject.findByRoom(1).then((sessions) {
+        expect(sessions, hasLength(1));
+      });
+    });
+
+    test('when no room matches', () async {
+      // given
+      var session = new MockSession();
+      var room = new Room(1, "Room1", 1);
+      when(session.room).thenReturn(room);
+      when(_api.getSessions()).thenReturn(new Future(() => {1: session}));
+
+      // when
+      // then
+      await _subject.findByRoom(2).then((sessions) {
+        expect(sessions, isEmpty);
       });
     });
   });

@@ -14,13 +14,14 @@ class SessionRepositoryImpl implements SessionRepository {
   SessionRepositoryImpl(this._api, this._cache);
 
   @override
-  Future<Map<int, Session>> findAll() {
+  Future<List<Session>> findAll() {
     if (!isDirty && _cache.isNotEmpty) {
-      return new Future.value(_cache);
+      return new Future.value(_cache.values.toList());
     }
     return _api.getSessions().then((sessions) {
       isDirty = false;
-      return sessions;
+      _cache = sessions;
+      return sessions.values.toList();
     });
   }
 
@@ -29,9 +30,19 @@ class SessionRepositoryImpl implements SessionRepository {
     if (!isDirty && _cache.containsKey(id)) {
       return new Future.value(_cache[id]);
     }
-    return _api.getSessions().then((sessions) => sessions[id]).then((session) {
+    return _api.getSessions().then((sessions) {
+      _cache = sessions;
+      return sessions[id];
+    }).then((session) {
       isDirty = false;
       return session;
+    });
+  }
+
+  @override
+  Future<List<Session>> findByRoom(int roomId) {
+    return findAll().then((sessions) {
+      return sessions.where((session) => session.room?.id == roomId).toList();
     });
   }
 }

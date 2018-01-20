@@ -28,6 +28,12 @@ class DroidKaigiApiImpl implements DroidKaigiApi {
     return _speakerMap;
   }
 
+  @override
+  Future<Map<int, Room>> getRooms() async {
+    await _requestAll();
+    return _roomMap;
+  }
+
   _requestAll() async {
     var response = await http.read("$_BASE_URL/all.json");
     var json = JSON.decode(response);
@@ -53,7 +59,7 @@ class DroidKaigiApiImpl implements DroidKaigiApi {
     // Session
     var sessions = json['sessions'];
     for (var session in sessions) {
-      _sessionMap[session['id']] =
+      _sessionMap[int.parse(session['id'])] =
           Session.fromJson(session, _categoryMap, _roomMap);
     }
 
@@ -66,7 +72,9 @@ class DroidKaigiApiImpl implements DroidKaigiApi {
     // Fill speakers in sessions
     for (var session in sessions) {
       for (var speakerId in session['speakers']) {
-        _sessionMap[session['id']].speakers.add(_speakerMap[speakerId]);
+        _sessionMap[int.parse(session['id'])]
+            .speakers
+            .add(_speakerMap[speakerId]);
       }
     }
   }
