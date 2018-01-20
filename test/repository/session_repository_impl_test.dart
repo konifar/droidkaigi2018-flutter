@@ -23,7 +23,7 @@ void main() {
   group("findAll", () {
     test('when isDirty is true, findAll() calls api method.', () async {
       // given
-      when(_api.getSessions()).thenReturn(new Future(() => []));
+      when(_api.getSessions()).thenReturn(new Future(() => {}));
 
       // when
       await _subject.findAll();
@@ -49,7 +49,7 @@ void main() {
 
     test('when cache is empty, findAll() calls api method.', () async {
       // given
-      when(_api.getSessions()).thenReturn(new Future(() => []));
+      when(_api.getSessions()).thenReturn(new Future(() => {}));
       _subject.isDirty = false;
 
       // when

@@ -18,7 +18,7 @@ class _SessionsPageState extends State<SessionsPage> {
     new RepositoryFactory()
         .getSessionRepository()
         .findAll()
-        .then((s) => setSessions(s.values.toList()));
+        .then((s) => setSessions(s));
   }
 
   @override
