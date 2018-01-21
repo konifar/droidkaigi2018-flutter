@@ -3,16 +3,24 @@ import 'dart:async';
 import 'package:droidkaigi2018/models/session.dart';
 import 'package:droidkaigi2018/models/speaker.dart';
 import 'package:droidkaigi2018/repository/repository_factory.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 
 class SessionsItem extends StatefulWidget {
-  SessionsItem(this._session, this.googleSignIn);
+  const SessionsItem({
+    Key key,
+    @required this.session,
+    this.googleSignIn,
+    this.onPressed,
+  })
+      : assert(session != null),
+        super(key: key);
 
-  final Session _session;
-
-  final googleSignIn;
+  final Session session;
+  final GoogleSignIn googleSignIn;
+  final VoidCallback onPressed;
 
   @override
   _SessionsItemState createState() => new _SessionsItemState();
@@ -35,7 +43,7 @@ class _SessionsItemState extends State<SessionsItem> {
     final TextStyle descriptionStyle = theme.textTheme.caption;
     final TextStyle speakerNameStyle = theme.textTheme.body2;
 
-    final Session _session = widget._session;
+    final Session _session = widget.session;
 
     final formatter =
         new DateFormat.Hm(Localizations.localeOf(context).languageCode);
@@ -49,61 +57,64 @@ class _SessionsItemState extends State<SessionsItem> {
     }
 
     return new Card(
-      child: new Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: new Stack(
-          children: [
-            new Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                new Text(
-                  "$startAt - $endAt / ${_session.room.name}",
-                  style: timeStyle,
-                ),
-                new Container(
+      child: new InkWell(
+        onTap: widget.onPressed,
+        child: new Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: new Stack(
+            children: [
+              new Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  new Text(
+                    "$startAt - $endAt / ${_session.room.name}",
+                    style: timeStyle,
+                  ),
+                  new Container(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: new Text(_session.title, style: titleStyle)),
+                  new DefaultTextStyle(
+                    style: descriptionStyle,
+                    softWrap: false,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
+                    child: new Padding(
+                      child: new Text(_session.description),
+                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    ),
+                  ),
+                  new Text(
+                    _session.topic.name,
+                    style: descriptionStyle,
+                  ),
+                  new Padding(
+                    child: new Column(
+                      children: _createSpeakerRows(
+                          _session.speakers, speakerNameStyle),
+                    ),
                     padding: const EdgeInsets.only(top: 8.0),
-                    child: new Text(_session.title, style: titleStyle)),
-                new DefaultTextStyle(
-                  style: descriptionStyle,
-                  softWrap: false,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 3,
-                  child: new Padding(
-                    child: new Text(_session.description),
-                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                  ),
-                ),
-                new Text(
-                  _session.topic.name,
-                  style: descriptionStyle,
-                ),
-                new Padding(
-                  child: new Column(
-                    children:
-                        _createSpeakerRows(_session.speakers, speakerNameStyle),
-                  ),
-                  padding: const EdgeInsets.only(top: 8.0),
-                )
-              ],
-            ),
-            new Positioned(
-              bottom: -8.0,
-              right: -8.0,
-              child: new IconButton(
-                icon: (_favorite
-                    ? new Icon(
-                        Icons.favorite,
-                        color: theme.primaryColor,
-                      )
-                    : new Icon(
-                        Icons.favorite_border,
-                        color: Colors.grey[500],
-                      )),
-                onPressed: _toggleFavorite,
+                  )
+                ],
               ),
-            ),
-          ],
+              new Positioned(
+                bottom: -8.0,
+                right: -8.0,
+                child: new IconButton(
+                  icon: (_favorite
+                      ? new Icon(
+                          Icons.favorite,
+                          color: theme.primaryColor,
+                        )
+                      : new Icon(
+                          Icons.favorite_border,
+                          color: Colors.grey[500],
+                        )),
+                  onPressed: _toggleFavorite,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -118,7 +129,7 @@ class _SessionsItemState extends State<SessionsItem> {
         .findAll(user.id)
         .then((Map<String, bool> result) {
       setState(() {
-        _favorite = result.containsKey(widget._session.id);
+        _favorite = result.containsKey(widget.session.id);
       });
     });
   }
