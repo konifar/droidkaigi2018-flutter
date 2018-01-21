@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:droidkaigi2018/models/session.dart';
 import 'package:droidkaigi2018/models/speaker.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,7 @@ class _SessionsItemState extends State<SessionsItem> {
 
     Future<Null> _toggleFavorite() async {
       await _ensureLoggedIn(widget.googleSignIn);
+      await _updateFavorite(widget.googleSignIn);
       setState(() => _isFavorited = !_isFavorited);
     }
 
@@ -133,4 +135,20 @@ Future<Null> _ensureLoggedIn(GoogleSignIn googleSignIn) async {
   if (user == null) {
     await googleSignIn.signIn();
   }
+}
+
+Future<Null> _updateFavorite(GoogleSignIn googleSignIn) async {
+  GoogleSignInAccount user = googleSignIn.currentUser;
+  if (user == null) {
+    await _ensureLoggedIn(googleSignIn);
+  }
+
+  print("hogehoge");
+
+  new StreamBuilder<QuerySnapshot>(
+    stream: Firestore.instance.collection('users').snapshots,
+    builder: (context, snapshot) {
+      print(snapshot.data.documents.length);
+    },
+  );
 }
