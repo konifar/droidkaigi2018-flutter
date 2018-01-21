@@ -38,7 +38,7 @@ class _SessionsItemState extends State<SessionsItem> {
 
     Future<Null> _toggleFavorite() async {
       await _ensureLoggedIn(widget.googleSignIn);
-      await _updateFavorite(widget.googleSignIn);
+      await _updateFavorite(widget.googleSignIn, _session);
       setState(() => _isFavorited = !_isFavorited);
     }
 
@@ -137,7 +137,7 @@ Future<Null> _ensureLoggedIn(GoogleSignIn googleSignIn) async {
   }
 }
 
-Future<Null> _updateFavorite(GoogleSignIn googleSignIn) async {
+Future<Null> _updateFavorite(GoogleSignIn googleSignIn, Session session) async {
   GoogleSignInAccount user = googleSignIn.currentUser;
   if (user == null) {
     await _ensureLoggedIn(googleSignIn);
@@ -145,10 +145,21 @@ Future<Null> _updateFavorite(GoogleSignIn googleSignIn) async {
 
   print("hogehoge");
 
-  new StreamBuilder<QuerySnapshot>(
-    stream: Firestore.instance.collection('users').snapshots,
-    builder: (context, snapshot) {
-      print(snapshot.data.documents.length);
-    },
-  );
+  // Update
+  await Firestore.instance
+      .collection("users/${user.id}/favorites")
+      .document(session.id)
+      .setData({'favorite': true});
+
+  //
+//  await Firestore.instance
+//      .collection("users/${user.id}/favorites")
+//      .document(session.id)
+//      .delete();
+
+//  final Stream<QuerySnapshot> snapshots =
+//      Firestore.instance.collection('users').snapshots;
+//  await snapshots.forEach((snapshot) {
+//    snapshot.documents.print("size: ${snapshot.documents.length}");
+//  });
 }
