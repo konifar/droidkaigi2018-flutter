@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:droidkaigi2018/models/session.dart';
 import 'package:droidkaigi2018/models/speaker.dart';
+import 'package:droidkaigi2018/repository/repository_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
@@ -19,7 +19,13 @@ class SessionsItem extends StatefulWidget {
 }
 
 class _SessionsItemState extends State<SessionsItem> {
-  bool _isFavorited = false;
+  bool _favorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchFavorite(widget.googleSignIn);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +44,8 @@ class _SessionsItemState extends State<SessionsItem> {
 
     Future<Null> _toggleFavorite() async {
       await _ensureLoggedIn(widget.googleSignIn);
-      await _updateFavorite(widget.googleSignIn, _session);
-      setState(() => _isFavorited = !_isFavorited);
+      await _updateFavorite(widget.googleSignIn, _session, !_favorite);
+      setState(() => _favorite = !_favorite);
     }
 
     return new Card(
@@ -85,7 +91,7 @@ class _SessionsItemState extends State<SessionsItem> {
               bottom: -8.0,
               right: -8.0,
               child: new IconButton(
-                icon: (_isFavorited
+                icon: (_favorite
                     ? new Icon(
                         Icons.favorite,
                         color: theme.primaryColor,
@@ -101,6 +107,20 @@ class _SessionsItemState extends State<SessionsItem> {
         ),
       ),
     );
+  }
+
+  Future<Null> fetchFavorite(GoogleSignIn googleSignIn) async {
+    await _ensureLoggedIn(googleSignIn);
+    GoogleSignInAccount user = googleSignIn.currentUser;
+
+    new RepositoryFactory()
+        .getFavoriteRepository()
+        .findAll(user.id)
+        .then((Map<String, bool> result) {
+      setState(() {
+        _favorite = result.containsKey(widget._session.id);
+      });
+    });
   }
 }
 
@@ -137,29 +157,12 @@ Future<Null> _ensureLoggedIn(GoogleSignIn googleSignIn) async {
   }
 }
 
-Future<Null> _updateFavorite(GoogleSignIn googleSignIn, Session session) async {
+Future<Null> _updateFavorite(
+    GoogleSignIn googleSignIn, Session session, bool favorite) async {
+  await _ensureLoggedIn(googleSignIn);
   GoogleSignInAccount user = googleSignIn.currentUser;
-  if (user == null) {
-    await _ensureLoggedIn(googleSignIn);
-  }
 
-  print("hogehoge");
-
-  // Update
-  await Firestore.instance
-      .collection("users/${user.id}/favorites")
-      .document(session.id)
-      .setData({'favorite': true});
-
-  //
-//  await Firestore.instance
-//      .collection("users/${user.id}/favorites")
-//      .document(session.id)
-//      .delete();
-
-//  final Stream<QuerySnapshot> snapshots =
-//      Firestore.instance.collection('users').snapshots;
-//  await snapshots.forEach((snapshot) {
-//    snapshot.documents.print("size: ${snapshot.documents.length}");
-//  });
+  await new RepositoryFactory()
+      .getFavoriteRepository()
+      .update(user.id, session.id, favorite);
 }
