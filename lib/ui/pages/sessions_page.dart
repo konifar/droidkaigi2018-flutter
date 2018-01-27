@@ -41,7 +41,7 @@ class _RoomSessionsPageState extends State<RoomSessionsPage> {
       new SessionPageRoute(
         session: session,
         builder: (BuildContext context) {
-          return new SessionDetail();
+          return new SessionDetail(session);
         },
       ),
     );
