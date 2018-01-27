@@ -33,6 +33,12 @@ class _SessionDetailState extends State<SessionDetail> {
   }
 
   Widget _buildAppBar(BuildContext context, double statusBarHeight) {
+    final ThemeData theme = Theme.of(context);
+    final TextStyle titleStyle =
+        theme.textTheme.subhead.merge(new TextStyle(color: Colors.white));
+
+    final Curve _textOpacity =
+        const Interval(0.4, 1.0, curve: Curves.easeInOut);
     final Size screenSize = MediaQuery.of(context).size;
     final double titleWidth =
         screenSize.width - kToolbarHeight - NavigationToolbar.kMiddleSpacing;
@@ -50,7 +56,6 @@ class _SessionDetailState extends State<SessionDetail> {
 
         final double extraPadding =
             new Tween<double>(begin: 10.0, end: 24.0).lerp(t);
-        final double height = appBarHeight;
         print("appBarHeight" + appBarHeight.toString());
 
         return new Padding(
@@ -67,9 +72,15 @@ class _SessionDetailState extends State<SessionDetail> {
                     titleWidth,
                     kToolbarHeight),
                 child: new Center(
-                  child: new Header(
-                    height: height,
-                    t: t.clamp(0.0, 1.0),
+                  child: new Opacity(
+                    opacity: _textOpacity.transform(1 - t.clamp(0.0, 1.0)),
+                    child: new Text(
+                      "まだAPI定義管理で消耗してるの？〜Swaggerを用いた大規模アプリ時代のAPI定義管理とコードジェネレート〜",
+                      style: titleStyle,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               ),
@@ -116,7 +127,6 @@ class Header extends StatefulWidget {
 
 class _HeaderState extends State<Header> {
   final Curve _textOpacity = const Interval(0.4, 1.0, curve: Curves.easeInOut);
-//  final Curve _titleOpacity = const Interval(0.1, 1.0, curve: Curves.easeInOut);
 
   @override
   Widget build(BuildContext context) {
