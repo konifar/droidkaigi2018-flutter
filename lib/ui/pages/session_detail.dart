@@ -12,6 +12,11 @@ class SessionDetail extends StatefulWidget {
 }
 
 const double _kAppBarHeight = 256.0;
+const String _icNiche = 'assets/ic_niche_cyan_20.png';
+const String _icSenior = 'assets/ic_intermediate_senior_bluegray_20.png';
+const String _icBeginner = 'assets/ic_beginner_lightgreen_20.png';
+
+const String _defaultAccountBackground = 'assets/img_drawer_header.png';
 
 enum AppBarBehavior { normal, pinned, floating, snapping }
 
@@ -93,10 +98,22 @@ class _SessionDetailState extends State<SessionDetail> {
                         new Container(
                           alignment: Alignment.centerLeft,
                           margin: new EdgeInsets.only(top: 8.0),
-                          child: new Text(
-                            widget._session.level.name,
-                            style: subheadStyle,
+                          child: new Chip(
+                            avatar: new CircleAvatar(
+                              backgroundImage: const AssetImage(_icNiche),
+                            ),
+                            label: new Text(
+                              widget._session.level.name,
+                              style: new TextStyle(
+                                color: theme.accentColor,
+                              ),
+                            ),
+                            backgroundColor: Colors.white,
                           ),
+//                          child: new Text(
+//                            widget._session.level.name,
+//                            style: subheadStyle,
+//                          ),
                         ),
                       ],
                     ),
