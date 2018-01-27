@@ -129,7 +129,7 @@ class _SessionsItemState extends State<SessionsItem> {
         .findAll(user.id)
         .then((Map<String, bool> result) {
       setState(() {
-        _favorite = result.containsKey(widget.session.id);
+        _favorite = result[widget.session.id] == true;
       });
     });
   }

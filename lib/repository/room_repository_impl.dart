@@ -20,6 +20,7 @@ class RoomRepositoryImpl implements RoomRepository {
     }
     return _api.getRooms().then((rooms) {
       isDirty = false;
+      _cache = rooms;
       return rooms;
     });
   }
@@ -29,7 +30,10 @@ class RoomRepositoryImpl implements RoomRepository {
     if (!isDirty && _cache.containsKey(id)) {
       return new Future.value(_cache[id]);
     }
-    return findAll().then((sessions) => sessions[id]).then((room) {
+    return findAll().then((rooms) {
+      _cache = rooms;
+      rooms[id];
+    }).then((room) {
       isDirty = false;
       return room;
     });
