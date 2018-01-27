@@ -88,9 +88,9 @@ class _SessionDetailState extends State<SessionDetail> {
         final double t =
             (appBarHeight - kToolbarHeight) / (_kAppBarHeight - kToolbarHeight);
 
-        final double extraPadding =
-            new Tween<double>(begin: 10.0, end: 24.0).lerp(t);
-        print("appBarHeight" + appBarHeight.toString());
+        final double parallax =
+            new Tween<double>(begin: _kAppBarHeight / 1.5, end: 0.0)
+                .lerp(t.clamp(0.0, 1.0));
 
         return new Padding(
           padding: new EdgeInsets.only(
@@ -98,6 +98,25 @@ class _SessionDetailState extends State<SessionDetail> {
           ),
           child: new Stack(
             children: [
+              new Positioned(
+                top: -parallax,
+                left: 0.0,
+                right: 0.0,
+                height: _kAppBarHeight,
+                child: new Opacity(
+                  opacity: _textOpacity.transform(t.clamp(0.0, 1.0)),
+                  child: new Container(
+                    decoration: const BoxDecoration(
+                      image: const DecorationImage(
+                        image: const AssetImage(
+                          _defaultAccountBackground,
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               new Positioned(
                 bottom: 0.0,
                 width: size.width,
