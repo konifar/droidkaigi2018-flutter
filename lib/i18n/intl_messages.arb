@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-01-15T03:07:11.397592",
+  "@@last_modified": "2018-01-27T19:49:59.802988",
   "appName": "DroidKaigi 2018",
   "@appName": {
     "type": "text",
@@ -39,5 +39,12 @@
   "@about": {
     "type": "text",
     "placeholders": {}
+  },
+  "day": "DAY{day}",
+  "@day": {
+    "type": "text",
+    "placeholders": {
+      "day": {}
+    }
   }
 }

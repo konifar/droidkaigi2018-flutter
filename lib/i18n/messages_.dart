@@ -17,15 +17,18 @@ typedef MessageIfAbsent(String message_str, List args);
 class MessageLookup extends MessageLookupByLibrary {
   get localeName => '';
 
+  static m0(day) => "\$day日目";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => {
-        "about": MessageLookupByLibrary.simpleMessage("詳細"),
-        "allSessions": MessageLookupByLibrary.simpleMessage("すべてのセッション"),
-        "appName": MessageLookupByLibrary.simpleMessage("DroidKaigi 2016"),
-        "map": MessageLookupByLibrary.simpleMessage("マップ"),
-        "mySchedule": MessageLookupByLibrary.simpleMessage("マイスケジュール"),
-        "questionnaire": MessageLookupByLibrary.simpleMessage("アンケート"),
-        "settings": MessageLookupByLibrary.simpleMessage("設定"),
-        "sponsors": MessageLookupByLibrary.simpleMessage("スポンサー")
-      };
+    "about" : MessageLookupByLibrary.simpleMessage("詳細"),
+    "allSessions" : MessageLookupByLibrary.simpleMessage("すべてのセッション"),
+    "appName" : MessageLookupByLibrary.simpleMessage("DroidKaigi 2018"),
+    "day" : m0,
+    "map" : MessageLookupByLibrary.simpleMessage("マップ"),
+    "mySchedule" : MessageLookupByLibrary.simpleMessage("マイスケジュール"),
+    "questionnaire" : MessageLookupByLibrary.simpleMessage("アンケート"),
+    "settings" : MessageLookupByLibrary.simpleMessage("設定"),
+    "sponsors" : MessageLookupByLibrary.simpleMessage("スポンサー")
+  };
 }
