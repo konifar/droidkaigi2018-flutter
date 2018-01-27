@@ -40,8 +40,9 @@ class _SessionDetailState extends State<SessionDetail> {
 
   Widget _buildAppBar(BuildContext context, double statusBarHeight) {
     final ThemeData theme = Theme.of(context);
-    final TextStyle titleStyle =
-        theme.textTheme.title.merge(new TextStyle(color: Colors.white));
+    final TextStyle titleStyle = theme.textTheme.title.merge(new TextStyle(
+      color: Colors.white,
+    ));
     final subheadStyle =
         theme.textTheme.caption.merge(new TextStyle(color: Colors.white));
     final speakerNameStyle =
@@ -89,7 +90,7 @@ class _SessionDetailState extends State<SessionDetail> {
             (appBarHeight - kToolbarHeight) / (_kAppBarHeight - kToolbarHeight);
 
         final double parallax =
-            new Tween<double>(begin: _kAppBarHeight / 1.5, end: 0.0)
+            new Tween<double>(begin: _kAppBarHeight / 2.5, end: 0.0)
                 .lerp(t.clamp(0.0, 1.0));
 
         return new Padding(
