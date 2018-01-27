@@ -35,6 +35,8 @@ class _SessionDetailState extends State<SessionDetail> {
   Widget _buildAppBar(BuildContext context, double statusBarHeight) {
     final ThemeData theme = Theme.of(context);
     final TextStyle titleStyle =
+        theme.textTheme.title.merge(new TextStyle(color: Colors.white));
+    final subheadStyle =
         theme.textTheme.subhead.merge(new TextStyle(color: Colors.white));
 
     final Curve _textOpacity =
@@ -46,7 +48,6 @@ class _SessionDetailState extends State<SessionDetail> {
     return new SliverAppBar(
       pinned: true,
       expandedHeight: _kAppBarHeight,
-      title: new Text(widget._session.title),
       flexibleSpace: new LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
         final Size size = constraints.biggest;
@@ -61,10 +62,47 @@ class _SessionDetailState extends State<SessionDetail> {
         return new Padding(
           padding: new EdgeInsets.only(
             top: statusBarHeight,
-            bottom: extraPadding,
           ),
           child: new Stack(
             children: [
+              new Positioned(
+                bottom: 0.0,
+                width: size.width,
+                child: new Opacity(
+                  opacity: _textOpacity.transform(t.clamp(0.0, 1.0)),
+                  child: new Container(
+                    margin: const EdgeInsets.all(16.0),
+                    child: new Column(
+                      children: [
+                        new Container(
+                          alignment: Alignment.centerLeft,
+                          child: new Text(
+                            widget._session.title,
+                            style: titleStyle,
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        new Container(
+                          margin: new EdgeInsets.only(top: 8.0),
+                          alignment: Alignment.centerLeft,
+                          child: new Text(
+                            widget._session.topic.name,
+                            style: subheadStyle,
+                          ),
+                        ),
+                        new Container(
+                          alignment: Alignment.centerLeft,
+                          margin: new EdgeInsets.only(top: 8.0),
+                          child: new Text(
+                            widget._session.level.name,
+                            style: subheadStyle,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               new Positioned.fromRect(
                 rect: new Rect.fromLTWH(
                     kToolbarHeight - NavigationToolbar.kMiddleSpacing,
@@ -75,7 +113,7 @@ class _SessionDetailState extends State<SessionDetail> {
                   child: new Opacity(
                     opacity: _textOpacity.transform(1 - t.clamp(0.0, 1.0)),
                     child: new Text(
-                      "まだAPI定義管理で消耗してるの？〜Swaggerを用いた大規模アプリ時代のAPI定義管理とコードジェネレート〜",
+                      widget._session.title,
                       style: titleStyle,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -107,6 +145,9 @@ class _SessionDetailState extends State<SessionDetail> {
             _buildAppBar(context, statusBarHeight),
             new SliverPadding(
               padding: const EdgeInsets.all(16.0),
+              sliver: new SliverToBoxAdapter(
+                child: new Text(widget._session.description),
+              ),
             ),
           ],
         ),
