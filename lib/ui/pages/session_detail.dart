@@ -58,9 +58,9 @@ class _SessionDetailState extends State<SessionDetail> {
         List<Speaker> speakers, TextStyle speakerNameStyle) {
       return speakers.map((speaker) {
         int index = speakers.indexOf(speaker);
-        double paddingLeft = index == 0 ? 0.0 : 16.0;
+//        double paddingLeft = index == 0 ? 0.0 : 16.0;
         return new Container(
-          padding: new EdgeInsets.only(top: 8.0, left: paddingLeft),
+          padding: new EdgeInsets.only(top: 8.0),
           child: new Row(
             children: [
               new SizedBox(
@@ -157,7 +157,7 @@ class _SessionDetailState extends State<SessionDetail> {
                       ),
                       new Container(
                         margin: const EdgeInsets.only(top: 4.0),
-                        child: new Row(
+                        child: new Column(
                           children: _createSpeakerRows(
                               widget._session.speakers, speakerNameStyle),
                         ),
