@@ -1,4 +1,5 @@
 import 'package:droidkaigi2018/models/session.dart';
+import 'package:droidkaigi2018/models/speaker.dart';
 import 'package:droidkaigi2018/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class SessionDetail extends StatefulWidget {
   _SessionDetailState createState() => new _SessionDetailState();
 }
 
-const double _kAppBarHeight = 256.0;
+const double _kAppBarHeight = 320.0;
 const String _icNiche = 'assets/ic_niche_cyan_20.png';
 const String _icSenior = 'assets/ic_intermediate_senior_bluegray_20.png';
 const String _icBeginner = 'assets/ic_beginner_lightgreen_20.png';
@@ -42,13 +43,40 @@ class _SessionDetailState extends State<SessionDetail> {
     final TextStyle titleStyle =
         theme.textTheme.title.merge(new TextStyle(color: Colors.white));
     final subheadStyle =
-        theme.textTheme.subhead.merge(new TextStyle(color: Colors.white));
+        theme.textTheme.caption.merge(new TextStyle(color: Colors.white));
+    final speakerNameStyle =
+        theme.textTheme.body2.merge(new TextStyle(color: Colors.white));
 
     final Curve _textOpacity =
         const Interval(0.4, 1.0, curve: Curves.easeInOut);
     final Size screenSize = MediaQuery.of(context).size;
     final double titleWidth =
         screenSize.width - kToolbarHeight - NavigationToolbar.kMiddleSpacing;
+
+    List<Widget> _createSpeakerRows(
+        List<Speaker> speakers, TextStyle speakerNameStyle) {
+      return speakers.map((speaker) {
+        int index = speakers.indexOf(speaker);
+        double paddingLeft = index == 0 ? 0.0 : 16.0;
+        return new Container(
+          padding: new EdgeInsets.only(top: 8.0, left: paddingLeft),
+          child: new Row(
+            children: [
+              new SizedBox(
+                width: 32.0,
+                height: 32.0,
+                child: new CircleAvatar(
+                  backgroundImage: new NetworkImage(speaker.profilePicture),
+                ),
+              ),
+              new Container(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: new Text(speaker.fullName, style: speakerNameStyle)),
+            ],
+          ),
+        );
+      }).toList();
+    }
 
     return new SliverAppBar(
       pinned: true,
@@ -88,7 +116,7 @@ class _SessionDetailState extends State<SessionDetail> {
                           ),
                         ),
                         new Container(
-                          margin: new EdgeInsets.only(top: 8.0),
+                          margin: new EdgeInsets.only(top: 16.0),
                           alignment: Alignment.centerLeft,
                           child: new Text(
                             widget._session.topic.name,
@@ -97,7 +125,7 @@ class _SessionDetailState extends State<SessionDetail> {
                         ),
                         new Container(
                           alignment: Alignment.centerLeft,
-                          margin: new EdgeInsets.only(top: 8.0),
+                          margin: new EdgeInsets.only(top: 12.0),
                           child: new Chip(
                             avatar: new CircleAvatar(
                               backgroundImage: const AssetImage(_icNiche),
@@ -110,11 +138,14 @@ class _SessionDetailState extends State<SessionDetail> {
                             ),
                             backgroundColor: Colors.white,
                           ),
-//                          child: new Text(
-//                            widget._session.level.name,
-//                            style: subheadStyle,
-//                          ),
                         ),
+                        new Container(
+                          margin: const EdgeInsets.only(top: 4.0),
+                          child: new Row(
+                            children: _createSpeakerRows(
+                                widget._session.speakers, speakerNameStyle),
+                          ),
+                        )
                       ],
                     ),
                   ),
