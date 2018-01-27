@@ -6,5 +6,6 @@
   "settings":"Settings",
   "sponsors":"Sponsors",
   "questionnaire":"Questionnaire",
-  "about":"About"
+  "about":"About",
+  "day":"DAY$day"
 }

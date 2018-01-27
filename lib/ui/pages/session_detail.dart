@@ -1,7 +1,9 @@
+import 'package:droidkaigi2018/i18n/strings.dart';
 import 'package:droidkaigi2018/models/session.dart';
 import 'package:droidkaigi2018/models/speaker.dart';
 import 'package:droidkaigi2018/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class SessionDetail extends StatefulWidget {
   final Session _session;
@@ -76,9 +78,8 @@ class _SessionDetailState extends State<SessionDetail> {
    */
   Widget _buildAppBarFixedTitle(
       double statusBarHeight, double t, ThemeData theme) {
-    final TextStyle titleStyle = theme.textTheme.subhead.merge(new TextStyle(
+    final TextStyle titleStyle = theme.textTheme.title.merge(new TextStyle(
       color: Colors.white,
-      fontWeight: FontWeight.bold,
     ));
 
     final Curve _textOpacity =
@@ -89,14 +90,19 @@ class _SessionDetailState extends State<SessionDetail> {
     final double titleWidth =
         screenSize.width - kToolbarHeight - NavigationToolbar.kMiddleSpacing;
 
+    final iOS = Theme.of(context).platform == TargetPlatform.iOS;
+
     return new Positioned.fromRect(
       rect: new Rect.fromLTWH(
-        kToolbarHeight - NavigationToolbar.kMiddleSpacing,
+        iOS
+            ? kToolbarHeight - NavigationToolbar.kMiddleSpacing
+            : kToolbarHeight,
         statusBarHeight,
         titleWidth,
         kToolbarHeight,
       ),
-      child: new Center(
+      child: new Container(
+        alignment: iOS ? Alignment.center : Alignment.centerLeft,
         child: new Opacity(
           opacity: _textOpacity.transform(1 - t.clamp(0.0, 1.0)),
           child: new Text(
@@ -104,7 +110,6 @@ class _SessionDetailState extends State<SessionDetail> {
             style: titleStyle,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
           ),
         ),
       ),
@@ -155,7 +160,8 @@ class _SessionDetailState extends State<SessionDetail> {
       child: new Opacity(
         opacity: _textOpacity.transform(t.clamp(0.0, 1.0)),
         child: new Container(
-          margin: const EdgeInsets.all(16.0),
+          margin: const EdgeInsets.only(
+              left: 16.0, right: 16.0, top: 16.0, bottom: 24.0),
           child: new Column(
             children: [
               // Title
@@ -234,18 +240,57 @@ class _SessionDetailState extends State<SessionDetail> {
         body: new CustomScrollView(
           slivers: [
             _buildAppBar(context),
-            _buildBody,
+            _buildBody(),
           ],
         ),
       ),
     );
   }
 
-  Widget get _buildBody {
+  Widget _buildBody() {
+    final ThemeData theme = Theme.of(context);
+    final textStyle = theme.textTheme.body1.merge(new TextStyle(
+      color: Colors.grey[600],
+    ));
+    final descriptionStyle = theme.textTheme.body1;
+
     return new SliverPadding(
       padding: const EdgeInsets.all(16.0),
-      sliver: new SliverToBoxAdapter(
-        child: new Text(widget._session.description),
+      sliver: new SliverList(
+        delegate: new SliverChildListDelegate([
+          _buildDate(textStyle),
+          new Container(
+            margin: const EdgeInsets.only(top: 8.0),
+            child: new Text(
+              widget._session.room.name,
+              style: textStyle,
+            ),
+          ),
+          new Container(
+            margin: const EdgeInsets.only(top: 16.0),
+            child: new Text(
+              widget._session.description,
+              style: descriptionStyle,
+            ),
+          ),
+        ]),
+      ),
+    );
+  }
+
+  Widget _buildDate(TextStyle textStyle) {
+    final formatter =
+        new DateFormat.Hm(Localizations.localeOf(context).languageCode);
+    final startAt = formatter.format(widget._session.startsAt);
+    final endAt = formatter.format(widget._session.endsAt);
+
+    final day = (widget._session.startsAt.day == 8) ? 1 : 2;
+
+    return new Container(
+      margin: const EdgeInsets.only(top: 8.0),
+      child: new Text(
+        "${Strings.of(context).day(day)} / $startAt - $endAt",
+        style: textStyle,
       ),
     );
   }

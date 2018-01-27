@@ -17,15 +17,18 @@ typedef MessageIfAbsent(String message_str, List args);
 class MessageLookup extends MessageLookupByLibrary {
   get localeName => 'messages';
 
+  static m0(day) => "DAY${day}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => {
-        "about": MessageLookupByLibrary.simpleMessage("About"),
-        "allSessions": MessageLookupByLibrary.simpleMessage("All Sessions"),
-        "appName": MessageLookupByLibrary.simpleMessage("DroidKaigi 2018"),
-        "map": MessageLookupByLibrary.simpleMessage("Map"),
-        "mySchedule": MessageLookupByLibrary.simpleMessage("My Schedule"),
-        "questionnaire": MessageLookupByLibrary.simpleMessage("Quesionnaire"),
-        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
-        "sponsors": MessageLookupByLibrary.simpleMessage("Sponsors")
-      };
+    "about" : MessageLookupByLibrary.simpleMessage("About"),
+    "allSessions" : MessageLookupByLibrary.simpleMessage("All Sessions"),
+    "appName" : MessageLookupByLibrary.simpleMessage("DroidKaigi 2018"),
+    "day" : m0,
+    "map" : MessageLookupByLibrary.simpleMessage("Map"),
+    "mySchedule" : MessageLookupByLibrary.simpleMessage("My Schedule"),
+    "questionnaire" : MessageLookupByLibrary.simpleMessage("Quesionnaire"),
+    "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
+    "sponsors" : MessageLookupByLibrary.simpleMessage("Sponsors")
+  };
 }

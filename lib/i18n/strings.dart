@@ -29,4 +29,5 @@ class Strings {
   String sponsors() => Intl.message("Sponsors", name: "sponsors");
   String questionnaire() => Intl.message("Quesionnaire", name: "questionnaire");
   String about() => Intl.message("About", name: "about");
+  String day(int day) => Intl.message("DAY$day", name: "day", args: [day]);
 }
