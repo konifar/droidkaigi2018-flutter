@@ -93,105 +93,100 @@ class _SessionDetailState extends State<SessionDetail> {
             new Tween<double>(begin: _kAppBarHeight / 2.5, end: 0.0)
                 .lerp(t.clamp(0.0, 1.0));
 
-        return new Padding(
-          padding: new EdgeInsets.only(
-            top: statusBarHeight,
-          ),
-          child: new Stack(
-            children: [
-              new Positioned(
-                top: -parallax,
-                left: 0.0,
-                right: 0.0,
-                height: _kAppBarHeight,
-                child: new Opacity(
-                  opacity: _textOpacity.transform(t.clamp(0.0, 1.0)),
-                  child: new Container(
-                    decoration: const BoxDecoration(
-                      image: const DecorationImage(
-                        image: const AssetImage(
-                          _defaultAccountBackground,
-                        ),
-                        fit: BoxFit.cover,
+        return new Stack(
+          children: [
+            new Positioned(
+              top: -parallax,
+              left: 0.0,
+              right: 0.0,
+              height: _kAppBarHeight + statusBarHeight,
+              child: new Opacity(
+                opacity: _textOpacity.transform(t.clamp(0.0, 1.0)),
+                child: new Container(
+                  decoration: const BoxDecoration(
+                    image: const DecorationImage(
+                      image: const AssetImage(
+                        _defaultAccountBackground,
                       ),
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
               ),
-              new Positioned(
-                bottom: 0.0,
-                width: size.width,
+            ),
+            new Positioned(
+              bottom: 0.0,
+              width: size.width,
+              child: new Opacity(
+                opacity: _textOpacity.transform(t.clamp(0.0, 1.0)),
+                child: new Container(
+                  margin: const EdgeInsets.all(16.0),
+                  child: new Column(
+                    children: [
+                      new Container(
+                        alignment: Alignment.centerLeft,
+                        child: new Text(
+                          widget._session.title,
+                          style: titleStyle,
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      new Container(
+                        margin: new EdgeInsets.only(top: 16.0),
+                        alignment: Alignment.centerLeft,
+                        child: new Text(
+                          widget._session.topic.name,
+                          style: subheadStyle,
+                        ),
+                      ),
+                      new Container(
+                        alignment: Alignment.centerLeft,
+                        margin: new EdgeInsets.only(top: 12.0),
+                        child: new Chip(
+                          avatar: new CircleAvatar(
+                            backgroundImage: const AssetImage(_icNiche),
+                          ),
+                          label: new Text(
+                            widget._session.level.name,
+                            style: new TextStyle(
+                              color: theme.accentColor,
+                            ),
+                          ),
+                          backgroundColor: Colors.white,
+                        ),
+                      ),
+                      new Container(
+                        margin: const EdgeInsets.only(top: 4.0),
+                        child: new Row(
+                          children: _createSpeakerRows(
+                              widget._session.speakers, speakerNameStyle),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            new Positioned.fromRect(
+              rect: new Rect.fromLTWH(
+                  kToolbarHeight - NavigationToolbar.kMiddleSpacing,
+                  statusBarHeight,
+                  titleWidth,
+                  kToolbarHeight),
+              child: new Center(
                 child: new Opacity(
-                  opacity: _textOpacity.transform(t.clamp(0.0, 1.0)),
-                  child: new Container(
-                    margin: const EdgeInsets.all(16.0),
-                    child: new Column(
-                      children: [
-                        new Container(
-                          alignment: Alignment.centerLeft,
-                          child: new Text(
-                            widget._session.title,
-                            style: titleStyle,
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                        new Container(
-                          margin: new EdgeInsets.only(top: 16.0),
-                          alignment: Alignment.centerLeft,
-                          child: new Text(
-                            widget._session.topic.name,
-                            style: subheadStyle,
-                          ),
-                        ),
-                        new Container(
-                          alignment: Alignment.centerLeft,
-                          margin: new EdgeInsets.only(top: 12.0),
-                          child: new Chip(
-                            avatar: new CircleAvatar(
-                              backgroundImage: const AssetImage(_icNiche),
-                            ),
-                            label: new Text(
-                              widget._session.level.name,
-                              style: new TextStyle(
-                                color: theme.accentColor,
-                              ),
-                            ),
-                            backgroundColor: Colors.white,
-                          ),
-                        ),
-                        new Container(
-                          margin: const EdgeInsets.only(top: 4.0),
-                          child: new Row(
-                            children: _createSpeakerRows(
-                                widget._session.speakers, speakerNameStyle),
-                          ),
-                        )
-                      ],
-                    ),
+                  opacity: _textOpacity.transform(1 - t.clamp(0.0, 1.0)),
+                  child: new Text(
+                    widget._session.title,
+                    style: titleStyle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
-              new Positioned.fromRect(
-                rect: new Rect.fromLTWH(
-                    kToolbarHeight - NavigationToolbar.kMiddleSpacing,
-                    0.0,
-                    titleWidth,
-                    kToolbarHeight),
-                child: new Center(
-                  child: new Opacity(
-                    opacity: _textOpacity.transform(1 - t.clamp(0.0, 1.0)),
-                    child: new Text(
-                      widget._session.title,
-                      style: titleStyle,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         );
       }),
     );
