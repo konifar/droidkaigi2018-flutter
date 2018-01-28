@@ -6,7 +6,7 @@ import 'package:droidkaigi2018/ui/drawer.dart';
 import 'package:droidkaigi2018/ui/map/map.dart';
 import 'package:droidkaigi2018/ui/page_container.dart';
 import 'package:droidkaigi2018/ui/sessions/all_sessions.dart';
-import 'package:droidkaigi2018/ui/sessions/my_schedule.dart';
+import 'package:droidkaigi2018/ui/myschedule/my_schedule.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
