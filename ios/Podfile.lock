@@ -54,6 +54,11 @@ PODS:
   - google_sign_in (0.0.1):
     - Flutter
     - GoogleSignIn (~> 4.0)
+  - GoogleMaps (2.5.0):
+    - GoogleMaps/Maps (= 2.5.0)
+  - GoogleMaps/Base (2.5.0)
+  - GoogleMaps/Maps (2.5.0):
+    - GoogleMaps/Base
   - GoogleSignIn (4.1.1):
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GoogleToolboxForMac/NSString+URLArguments (~> 2.1)
@@ -96,6 +101,9 @@ PODS:
   - GTMSessionFetcher/Full (1.1.12):
     - GTMSessionFetcher/Core (= 1.1.12)
   - leveldb-library (1.20)
+  - map_view (0.0.1):
+    - Flutter
+    - GoogleMaps
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -108,6 +116,7 @@ DEPENDENCIES:
   - firebase_auth (from `/Users/konifar/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.4.3/ios`)
   - Flutter (from `/Users/konifar/Library/flutter/bin/cache/artifacts/engine/ios`)
   - google_sign_in (from `/Users/konifar/.pub-cache/hosted/pub.dartlang.org/google_sign_in-2.0.1/ios`)
+  - map_view (from `/Users/konifar/.pub-cache/hosted/pub.dartlang.org/map_view-0.0.10/ios`)
 
 EXTERNAL SOURCES:
   cloud_firestore:
@@ -118,6 +127,8 @@ EXTERNAL SOURCES:
     :path: /Users/konifar/Library/flutter/bin/cache/artifacts/engine/ios
   google_sign_in:
     :path: /Users/konifar/.pub-cache/hosted/pub.dartlang.org/google_sign_in-2.0.1/ios
+  map_view:
+    :path: /Users/konifar/.pub-cache/hosted/pub.dartlang.org/map_view-0.0.10/ios
 
 SPEC CHECKSUMS:
   BoringSSL: f3d6b8ce199b9c450a8cfc14895d07a2627fc232
@@ -132,6 +143,7 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 81df5805a08001e69138664bdd02c6719a9ac80f
   Flutter: d674e78c937094a75ac71dd77e921e840bea3dbf
   google_sign_in: 24ea34feed2d7d04e957cd1c4daf063c488532c2
+  GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
   GoogleSignIn: 3fdaa34a2ba04dbd7a25d7db39aecb0da98d5bdc
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   gRPC: 572520c17b794362388d5c95396329592a3c199b
@@ -141,6 +153,7 @@ SPEC CHECKSUMS:
   GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
   GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  map_view: 2cc7fe6d6e9b9b158c46383ebca44e2d1b09abb8
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
 
