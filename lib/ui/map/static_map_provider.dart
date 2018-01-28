@@ -1,5 +1,5 @@
-import 'package:droidkaigi2018/ui/map/Location.dart';
-import 'package:droidkaigi2018/ui/map/Marker.dart';
+import 'package:droidkaigi2018/ui/map/location.dart';
+import 'package:droidkaigi2018/ui/map/marker.dart';
 import 'package:uri/uri.dart';
 
 class StaticMapProvider {
