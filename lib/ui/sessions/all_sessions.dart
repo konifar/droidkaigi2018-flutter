@@ -1,6 +1,6 @@
 import 'package:droidkaigi2018/models/room.dart';
 import 'package:droidkaigi2018/repository/repository_factory.dart';
-import 'package:droidkaigi2018/ui/pages/sessions_page.dart';
+import 'package:droidkaigi2018/ui/sessions/room_sessions_page.dart';
 import 'package:flutter/material.dart';
 
 class AllSessionsPage extends StatefulWidget {

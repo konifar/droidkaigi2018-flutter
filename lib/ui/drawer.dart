@@ -1,5 +1,5 @@
 import 'package:droidkaigi2018/i18n/strings.dart';
-import 'package:droidkaigi2018/ui/pages/page_container.dart';
+import 'package:droidkaigi2018/ui/page_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';

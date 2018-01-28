@@ -2,36 +2,48 @@ import 'dart:async';
 
 import 'package:droidkaigi2018/models/session.dart';
 import 'package:droidkaigi2018/repository/repository_factory.dart';
-import 'package:droidkaigi2018/ui/pages/session_detail.dart';
-import 'package:droidkaigi2018/ui/pages/session_item.dart';
+import 'package:droidkaigi2018/ui/sessions/session_item.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:meta/meta.dart';
 
 final googleSignIn = new GoogleSignIn();
 
-class RoomSessionsPage extends StatefulWidget {
-  final int roomId;
-
-  RoomSessionsPage(this.roomId);
-
+class MySchedulePage extends StatefulWidget {
   @override
-  _RoomSessionsPageState createState() => new _RoomSessionsPageState(roomId);
+  _MySchedulePageState createState() => new _MySchedulePageState();
 }
 
-class _RoomSessionsPageState extends State<RoomSessionsPage> {
+class _MySchedulePageState extends State<MySchedulePage> {
   List<Session> _sessions = [];
-  final int roomId;
-
-  _RoomSessionsPageState(this.roomId);
 
   @override
   void initState() {
     super.initState();
 
+    _fetch();
+  }
+
+  Future<Null> _fetch() async {
+    await _ensureLoggedIn(googleSignIn);
+    GoogleSignInAccount user = googleSignIn.currentUser;
+
+    List<int> favoriteIds = await new RepositoryFactory()
+        .getFavoriteRepository()
+        .findAll(user.id)
+        .then((favorites) {
+      List<int> favoriteSessionIds = new List();
+      favorites.forEach((String id, bool value) {
+        if (value == true) {
+          favoriteSessionIds.add(int.parse(id));
+        }
+      });
+      return favoriteSessionIds;
+    });
+
     new RepositoryFactory()
         .getSessionRepository()
-        .findByRoom(roomId)
+        .findByIds(favoriteIds)
         .then((s) => setSessions(s));
   }
 
@@ -74,4 +86,14 @@ class SessionPageRoute<Session> extends MaterialPageRoute {
 
   @override
   Session get currentResult => session;
+}
+
+Future<Null> _ensureLoggedIn(GoogleSignIn googleSignIn) async {
+  GoogleSignInAccount user = googleSignIn.currentUser;
+  if (user == null) {
+    user = await googleSignIn.signInSilently();
+  }
+  if (user == null) {
+    await googleSignIn.signIn();
+  }
 }

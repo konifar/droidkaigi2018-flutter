@@ -2,7 +2,7 @@ import 'package:droidkaigi2018/i18n/strings.dart';
 import 'package:droidkaigi2018/models/session.dart';
 import 'package:droidkaigi2018/models/speaker.dart';
 import 'package:droidkaigi2018/theme.dart';
-import 'package:droidkaigi2018/ui/pages/favorite_button.dart';
+import 'package:droidkaigi2018/ui/sessions/favorite_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';

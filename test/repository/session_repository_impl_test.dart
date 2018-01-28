@@ -108,6 +108,40 @@ void main() {
     });
   });
 
+  group("findByIds", () {
+    test('when one id matches', () async {
+      // given
+      var session1 = new MockSession();
+      when(session1.id).thenReturn("1");
+      var session2 = new MockSession();
+      when(session2.id).thenReturn("2");
+      when(_api.getSessions())
+          .thenReturn(new Future(() => {1: session1, 2: session2}));
+      var ids = [1, 3];
+
+      // when
+      await _subject.findByIds(ids).then((sessions) {
+        expect(sessions, hasLength(1));
+      });
+    });
+
+    test('when several ids matches', () async {
+      // given
+      var session1 = new MockSession();
+      when(session1.id).thenReturn("1");
+      var session2 = new MockSession();
+      when(session2.id).thenReturn("2");
+      when(_api.getSessions())
+          .thenReturn(new Future(() => {1: session1, 2: session2}));
+      var ids = [1, 2];
+
+      // when
+      await _subject.findByIds(ids).then((sessions) {
+        expect(sessions, hasLength(2));
+      });
+    });
+  });
+
   group("findByRoom", () {
     test('when one room matches', () async {
       // given
