@@ -16,8 +16,6 @@ const _lang = 139.69038920000003;
 
 const _placeUrl = 'https://www.google.com/maps?q=$_lat,$_lang';
 
-https://www.google.com/maps/place/35%C2%B041'44.9%22N+139%C2%B041'25.4%22E/@35.695795,139.6882003,17z/data=!3m1!4b1!4m5!3m4!1s0x0:0x0!8m2!3d35.695795!4d139.690389?hl=ja
-
 class MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
