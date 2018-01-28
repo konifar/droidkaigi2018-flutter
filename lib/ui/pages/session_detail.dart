@@ -2,13 +2,29 @@ import 'package:droidkaigi2018/i18n/strings.dart';
 import 'package:droidkaigi2018/models/session.dart';
 import 'package:droidkaigi2018/models/speaker.dart';
 import 'package:droidkaigi2018/theme.dart';
+import 'package:droidkaigi2018/ui/pages/favorite_button.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 
 class SessionDetail extends StatefulWidget {
-  final Session _session;
+  SessionDetail({
+    Key key,
+    @required this.session,
+    @required this.favorite,
+    @required this.googleSignIn,
+    @required this.onFavoriteChanged,
+  })
+      : assert(session != null),
+        assert(favorite != null),
+        assert(onFavoriteChanged != null),
+        super(key: key);
 
-  SessionDetail(this._session);
+  final Session session;
+  final GoogleSignIn googleSignIn;
+  final ValueChanged<bool> onFavoriteChanged;
+  bool favorite;
 
   @override
   _SessionDetailState createState() => new _SessionDetailState();
@@ -106,7 +122,7 @@ class _SessionDetailState extends State<SessionDetail> {
         child: new Opacity(
           opacity: _textOpacity.transform(1 - t.clamp(0.0, 1.0)),
           child: new Text(
-            widget._session.title,
+            widget.session.title,
             style: titleStyle,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -118,11 +134,11 @@ class _SessionDetailState extends State<SessionDetail> {
 
   Widget _buildLevelChip(ThemeData theme) {
     String lankIcon = _icBeginner;
-    if (widget._session.level.isBeginner()) {
+    if (widget.session.level.isBeginner()) {
       lankIcon = _icBeginner;
-    } else if (widget._session.level.isSenior()) {
+    } else if (widget.session.level.isSenior()) {
       lankIcon = _icSenior;
-    } else if (widget._session.level.isNiche()) {
+    } else if (widget.session.level.isNiche()) {
       lankIcon = _icNiche;
     }
 
@@ -131,7 +147,7 @@ class _SessionDetailState extends State<SessionDetail> {
         backgroundImage: new AssetImage(lankIcon),
       ),
       label: new Text(
-        widget._session.level.name,
+        widget.session.level.name,
         style: new TextStyle(
           color: theme.accentColor,
         ),
@@ -168,7 +184,7 @@ class _SessionDetailState extends State<SessionDetail> {
               new Container(
                 alignment: Alignment.centerLeft,
                 child: new Text(
-                  widget._session.title,
+                  widget.session.title,
                   style: titleStyle,
                 ),
               ),
@@ -177,7 +193,7 @@ class _SessionDetailState extends State<SessionDetail> {
                 margin: new EdgeInsets.only(top: 16.0),
                 alignment: Alignment.centerLeft,
                 child: new Text(
-                  widget._session.topic.name,
+                  widget.session.topic.name,
                   style: subheadStyle,
                 ),
               ),
@@ -191,7 +207,7 @@ class _SessionDetailState extends State<SessionDetail> {
                 margin: const EdgeInsets.only(top: 4.0),
                 child: new Column(
                   children: _buildSpeakerRows(
-                    widget._session.speakers,
+                    widget.session.speakers,
                     speakerNameStyle,
                   ),
                 ),
@@ -243,6 +259,22 @@ class _SessionDetailState extends State<SessionDetail> {
             _buildBody(),
           ],
         ),
+        floatingActionButton: new FloatingActionButton(
+          child: new FavoriteButton(
+            session: widget.session,
+            favorite: widget.favorite,
+            googleSignIn: widget.googleSignIn,
+            onChanged: (value) {
+              widget.onFavoriteChanged(value);
+              setState(() {
+                widget.favorite = !widget.favorite;
+              });
+            },
+            activeColor: Colors.white,
+            inActiveColor: Colors.white,
+          ),
+          onPressed: () => {},
+        ),
       ),
     );
   }
@@ -262,14 +294,14 @@ class _SessionDetailState extends State<SessionDetail> {
           new Container(
             margin: const EdgeInsets.only(top: 8.0),
             child: new Text(
-              widget._session.room.name,
+              widget.session.room.name,
               style: textStyle,
             ),
           ),
           new Container(
             margin: const EdgeInsets.only(top: 16.0),
             child: new Text(
-              widget._session.description,
+              widget.session.description,
               style: descriptionStyle,
             ),
           ),
@@ -281,10 +313,10 @@ class _SessionDetailState extends State<SessionDetail> {
   Widget _buildDate(TextStyle textStyle) {
     final formatter =
         new DateFormat.Hm(Localizations.localeOf(context).languageCode);
-    final startAt = formatter.format(widget._session.startsAt);
-    final endAt = formatter.format(widget._session.endsAt);
+    final startAt = formatter.format(widget.session.startsAt);
+    final endAt = formatter.format(widget.session.endsAt);
 
-    final day = (widget._session.startsAt.day == 8) ? 1 : 2;
+    final day = (widget.session.startsAt.day == 8) ? 1 : 2;
 
     return new Container(
       margin: const EdgeInsets.only(top: 8.0),

@@ -35,18 +35,6 @@ class _RoomSessionsPageState extends State<RoomSessionsPage> {
         .then((s) => setSessions(s));
   }
 
-  Future<Null> _showDetailPage(Session session) async {
-    await Navigator.push(
-      context,
-      new SessionPageRoute(
-        session: session,
-        builder: (BuildContext context) {
-          return new SessionDetail(session);
-        },
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     if (_sessions.isEmpty) {
@@ -63,7 +51,6 @@ class _RoomSessionsPageState extends State<RoomSessionsPage> {
           child: new SessionsItem(
             session: session,
             googleSignIn: googleSignIn,
-            onPressed: () => _showDetailPage(session),
           ),
         );
       }).toList(),
