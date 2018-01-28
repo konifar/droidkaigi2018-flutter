@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:droidkaigi2018/i18n/strings.dart';
+import 'package:droidkaigi2018/ui/map/Marker.dart';
+import 'package:droidkaigi2018/ui/map/static_map_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:map_view/map_view.dart';
 
 const String _icPlace = 'assets/ic_place_orange_24.png';
 const String _icTrain = 'assets/ic_train_orange_24.png';
@@ -28,69 +29,69 @@ class MapPage extends StatelessWidget {
 
     var staticMapProvider = new StaticMapProvider(apiKey);
     Uri staticMapUri = staticMapProvider
-        .getStaticUriWithMarkers([_marker], width: 900, height: 450);
+        .getStaticUriWithMarkers([_marker], 14, width: 900, height: 450);
 
-    return new Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        new Container(
-          child: new Image.network(staticMapUri.toString()),
-        ),
-        new Container(
-          color: theme.primaryColor,
-          padding: const EdgeInsets.all(16.0),
-          child: new Column(
-            children: [
-              new Container(
-                alignment: Alignment.centerLeft,
-                child: new Text(
-                  Strings.of(context).mapPlaceName,
-                  style: titleStyle,
-                ),
-              ),
-              new Container(
-                alignment: Alignment.centerLeft,
-                margin: const EdgeInsets.only(top: 8.0),
-                child: new Text(
-                  Strings.of(context).mapMeetingRoomsName,
-                  style: descriptionStyle,
-                ),
-              ),
-            ],
+    return new SingleChildScrollView(
+      child: new Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          new Container(
+            child: new Image.network(staticMapUri.toString()),
           ),
-        ),
-        new Container(
-          margin: const EdgeInsets.only(top: 16.0, right: 16.0),
-          child: new Row(
-            children: [
-              _buildIcon(_icPlace),
-              new Expanded(
-                child: new Text(
-                  Strings.of(context).mapAddress,
-                  style: theme.textTheme.body1,
+          new Container(
+            color: theme.primaryColor,
+            padding: const EdgeInsets.all(16.0),
+            child: new Column(
+              children: [
+                new Container(
+                  alignment: Alignment.centerLeft,
+                  child: new Text(
+                    Strings.of(context).mapPlaceName,
+                    style: titleStyle,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        new Container(
-          margin: const EdgeInsets.only(top: 16.0, right: 16.0),
-          child: new Row(
-            children: [
-              _buildIcon(_icTrain),
-              new Expanded(
-                child: new Text(
-                  Strings.of(context).mapNearbyStations,
-                  style: theme.textTheme.body1,
+                new Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(top: 8.0),
+                  child: new Text(
+                    Strings.of(context).mapMeetingRoomsName,
+                    style: descriptionStyle,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        new Expanded(
-            child: new Text("")), // To avoid catching unnecessary click event.
-      ],
+          new Container(
+            margin: const EdgeInsets.only(top: 16.0, right: 16.0),
+            child: new Row(
+              children: [
+                _buildIcon(_icPlace),
+                new Expanded(
+                  child: new Text(
+                    Strings.of(context).mapAddress,
+                    style: theme.textTheme.body1,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          new Container(
+            margin: const EdgeInsets.only(top: 24.0, right: 16.0, bottom: 16.0),
+            child: new Row(
+              children: [
+                _buildIcon(_icTrain),
+                new Expanded(
+                  child: new Text(
+                    Strings.of(context).mapNearbyStations,
+                    style: theme.textTheme.body1,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 

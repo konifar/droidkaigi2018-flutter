@@ -9,7 +9,7 @@ dependencies:
   intl:
   intl_translation:
 
-  map_view: ^0.0.10
+  uri: 0.7.0 # flutter_test depends on this version
 
   google_sign_in: 2.0.1
   firebase_auth: 0.4.3
@@ -20,10 +20,6 @@ dependencies:
   cupertino_icons: ^0.1.0
 
   dice: ^1.7.0
-
-# map_view depends on uri which depends on old quiver.
-dependency_overrides:
-  quiver: 0.26.2
 
 dev_dependencies:
   flutter_test:
