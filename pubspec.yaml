@@ -9,6 +9,9 @@ dependencies:
   intl:
   intl_translation:
 
+  uri: 0.7.0 # flutter_test depends on this version
+  url_launcher: "^2.0.1"
+
   google_sign_in: 2.0.1
   firebase_auth: 0.4.3
   cloud_firestore: 0.2.6
@@ -41,6 +44,9 @@ flutter:
       - assets/ic_niche_cyan_20.png
       - assets/ic_intermediate_senior_bluegray_20.png
       - assets/ic_beginner_lightgreen_20.png
+      - assets/ic_place_orange_24.png
+      - assets/ic_train_orange_24.png
+      - assets/ic_googlemap.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

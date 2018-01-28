@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-01-27T19:49:59.802988",
+  "@@last_modified": "2018-01-28T14:33:44.331367",
   "appName": "DroidKaigi 2018",
   "@appName": {
     "type": "text",
@@ -17,6 +17,11 @@
   },
   "map": "Map",
   "@map": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "access": "Access",
+  "@access": {
     "type": "text",
     "placeholders": {}
   },
@@ -46,5 +51,25 @@
     "placeholders": {
       "day": {}
     }
+  },
+  "mapPlaceName": "Bellesalle Shinjuku Grand Conference Center",
+  "@mapPlaceName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mapMeetingRoomsName": "DroidKaigi 2018 Place",
+  "@mapMeetingRoomsName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mapAddress": "Sumitomo Fudosan Shinjuku Grand Tower 5F 8-17-1 Nishi Shinjuku, Shinjuku City, Tokyo 160-0023",
+  "@mapAddress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mapNearbyStations": "Marunouchi subway line: 3 minutes walk from Nishi Shinjuku Station Gate No.1 Toei Oedo subway line: 7 minutes walk from Tochomae Station Gate E4 Toei Oedo subway line: 11 minutes walk from Shinjuku-Nishiguchi Station Gate D4 JR lines, Marunouchi/Toei Shinjuku/Toei Oedo subway line, Odakyu line, Keio line: 15 minutes walk from Shinjuku Station West Gate",
+  "@mapNearbyStations": {
+    "type": "text",
+    "placeholders": {}
   }
 }

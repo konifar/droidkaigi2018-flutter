@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => {
     "about" : MessageLookupByLibrary.simpleMessage("詳細"),
+    "access" : MessageLookupByLibrary.simpleMessage("アクセス"),
     "allSessions" : MessageLookupByLibrary.simpleMessage("すべてのセッション"),
     "appName" : MessageLookupByLibrary.simpleMessage("DroidKaigi 2018"),
     "day" : m0,

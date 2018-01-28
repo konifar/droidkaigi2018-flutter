@@ -22,10 +22,15 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => {
     "about" : MessageLookupByLibrary.simpleMessage("About"),
+    "access" : MessageLookupByLibrary.simpleMessage("Access"),
     "allSessions" : MessageLookupByLibrary.simpleMessage("All Sessions"),
     "appName" : MessageLookupByLibrary.simpleMessage("DroidKaigi 2018"),
     "day" : m0,
     "map" : MessageLookupByLibrary.simpleMessage("Map"),
+    "mapAddress" : MessageLookupByLibrary.simpleMessage("Sumitomo Fudosan Shinjuku Grand Tower 5F 8-17-1 Nishi Shinjuku, Shinjuku City, Tokyo 160-0023"),
+    "mapMeetingRoomsName" : MessageLookupByLibrary.simpleMessage("DroidKaigi 2018 Place"),
+    "mapNearbyStations" : MessageLookupByLibrary.simpleMessage("Marunouchi subway line: 3 minutes walk from Nishi Shinjuku Station Gate No.1 Toei Oedo subway line: 7 minutes walk from Tochomae Station Gate E4 Toei Oedo subway line: 11 minutes walk from Shinjuku-Nishiguchi Station Gate D4 JR lines, Marunouchi/Toei Shinjuku/Toei Oedo subway line, Odakyu line, Keio line: 15 minutes walk from Shinjuku Station West Gate"),
+    "mapPlaceName" : MessageLookupByLibrary.simpleMessage("Bellesalle Shinjuku Grand Conference Center"),
     "mySchedule" : MessageLookupByLibrary.simpleMessage("My Schedule"),
     "questionnaire" : MessageLookupByLibrary.simpleMessage("Quesionnaire"),
     "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
