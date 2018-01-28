@@ -5,7 +5,7 @@ import 'package:droidkaigi2018/models/speaker.dart';
 import 'package:droidkaigi2018/repository/repository_factory.dart';
 import 'package:droidkaigi2018/ui/sessions/favorite_button.dart';
 import 'package:droidkaigi2018/ui/sessions/session_detail.dart';
-import 'package:droidkaigi2018/ui/sessions/sessions_page.dart';
+import 'package:droidkaigi2018/ui/sessions/room_sessions_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
