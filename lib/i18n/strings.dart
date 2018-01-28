@@ -22,6 +22,8 @@ class Strings {
   static final Strings instance = new Strings();
 
   String get appName => Intl.message("DroidKaigi 2018", name: "appName");
+  String get appDescription =>
+      Intl.message("Feb,08 (Thu) - 09 (Fri)", name: "appDescription");
   String get allSessions => Intl.message("All Sessions", name: "allSessions");
   String get mySchedule => Intl.message("My Schedule", name: "mySchedule");
   String get map => Intl.message("Map", name: "map");
