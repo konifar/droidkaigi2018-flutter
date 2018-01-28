@@ -17,20 +17,26 @@ class DroidKaigiApiImpl implements DroidKaigiApi {
   var _speakerMap = new Map<String, Speaker>();
 
   @override
-  Future<Map<int, Session>> getSessions() async {
-    await _requestAll();
+  Future<Map<int, Session>> getSessions({bool refresh = false}) async {
+    if (refresh || _sessionMap.isEmpty) {
+      await _requestAll();
+    }
     return _sessionMap;
   }
 
   @override
-  Future<Map<String, Speaker>> getSpeakers() async {
-    await _requestAll();
+  Future<Map<String, Speaker>> getSpeakers({bool refresh = false}) async {
+    if (refresh || _speakerMap.isEmpty) {
+      await _requestAll();
+    }
     return _speakerMap;
   }
 
   @override
-  Future<Map<int, Room>> getRooms() async {
-    await _requestAll();
+  Future<Map<int, Room>> getRooms({bool refresh = false}) async {
+    if (refresh || _roomMap.isEmpty) {
+      await _requestAll();
+    }
     return _roomMap;
   }
 
@@ -52,8 +58,12 @@ class DroidKaigiApiImpl implements DroidKaigiApi {
 
     // Room
     var rooms = json['rooms'];
+    _roomMap[0] = new Room(Room.ID_ALL, "All", -1);
     for (var room in rooms) {
-      _roomMap[room['id']] = Room.fromJson(room);
+      // Sponsor room is not used.
+      if (room['id'] != 521) {
+        _roomMap[room['id']] = Room.fromJson(room);
+      }
     }
 
     // Session

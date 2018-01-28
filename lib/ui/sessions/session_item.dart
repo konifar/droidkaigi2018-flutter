@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:droidkaigi2018/i18n/strings.dart';
 import 'package:droidkaigi2018/models/session.dart';
 import 'package:droidkaigi2018/models/speaker.dart';
 import 'package:droidkaigi2018/repository/repository_factory.dart';
 import 'package:droidkaigi2018/ui/sessions/favorite_button.dart';
-import 'package:droidkaigi2018/ui/sessions/session_detail.dart';
+import 'package:droidkaigi2018/ui/sessions/level_image.dart';
 import 'package:droidkaigi2018/ui/sessions/room_sessions_page.dart';
+import 'package:droidkaigi2018/ui/sessions/session_detail.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -56,9 +58,14 @@ class _SessionsItemState extends State<SessionsItem> {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final TextStyle timeStyle = theme.textTheme.caption;
+    final TextStyle timeStyle = theme.textTheme.caption.merge(
+      const TextStyle(fontWeight: FontWeight.bold),
+    );
     final TextStyle titleStyle = theme.textTheme.title;
-    final TextStyle descriptionStyle = theme.textTheme.caption;
+    final TextStyle descriptionStyle = theme.textTheme.caption.merge(
+      const TextStyle(color: Colors.black),
+    );
+    final TextStyle topicStyle = theme.textTheme.caption;
     final TextStyle speakerNameStyle = theme.textTheme.body2;
 
     final Session _session = widget.session;
@@ -80,11 +87,11 @@ class _SessionsItemState extends State<SessionsItem> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   new Text(
-                    "$startAt - $endAt / ${_session.room.name}",
+                    "${Strings.of(context).day(widget.session.getDay())}   $startAt - $endAt / ${_session.room.name}",
                     style: timeStyle,
                   ),
                   new Container(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 12.0),
                       child: new Text(_session.title, style: titleStyle)),
                   new DefaultTextStyle(
                     style: descriptionStyle,
@@ -93,12 +100,29 @@ class _SessionsItemState extends State<SessionsItem> {
                     maxLines: 3,
                     child: new Padding(
                       child: new Text(_session.description),
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      padding: const EdgeInsets.only(top: 12.0, bottom: 8.0),
                     ),
                   ),
-                  new Text(
-                    _session.topic.name,
-                    style: descriptionStyle,
+                  new Row(
+                    children: [
+                      new Container(
+                        width: 24.0,
+                        height: 24.0,
+                        margin: const EdgeInsets.only(right: 8.0),
+                        decoration: new BoxDecoration(
+                          image: new DecorationImage(
+                            image: LevelImage.getAssetImage(_session.level),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      new Expanded(
+                        child: new Text(
+                          _session.topic.name,
+                          style: topicStyle,
+                        ),
+                      ),
+                    ],
                   ),
                   new Padding(
                     child: new Column(

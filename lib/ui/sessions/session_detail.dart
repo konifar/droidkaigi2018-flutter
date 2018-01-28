@@ -3,6 +3,7 @@ import 'package:droidkaigi2018/models/session.dart';
 import 'package:droidkaigi2018/models/speaker.dart';
 import 'package:droidkaigi2018/theme.dart';
 import 'package:droidkaigi2018/ui/sessions/favorite_button.dart';
+import 'package:droidkaigi2018/ui/sessions/level_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -32,9 +33,6 @@ class SessionDetail extends StatefulWidget {
 
 const double _kAppBarHeight = 320.0;
 
-const String _icNiche = 'assets/ic_niche_cyan_20.png';
-const String _icSenior = 'assets/ic_intermediate_senior_bluegray_20.png';
-const String _icBeginner = 'assets/ic_beginner_lightgreen_20.png';
 const String _imgHeader = 'assets/img_drawer_header.png';
 
 class _SessionDetailState extends State<SessionDetail> {
@@ -133,18 +131,9 @@ class _SessionDetailState extends State<SessionDetail> {
   }
 
   Widget _buildLevelChip(ThemeData theme) {
-    String lankIcon = _icBeginner;
-    if (widget.session.level.isBeginner()) {
-      lankIcon = _icBeginner;
-    } else if (widget.session.level.isSenior()) {
-      lankIcon = _icSenior;
-    } else if (widget.session.level.isNiche()) {
-      lankIcon = _icNiche;
-    }
-
     return new Chip(
       avatar: new CircleAvatar(
-        backgroundImage: new AssetImage(lankIcon),
+        backgroundImage: LevelImage.getAssetImage(widget.session.level),
       ),
       label: new Text(
         widget.session.level.name,
@@ -316,12 +305,10 @@ class _SessionDetailState extends State<SessionDetail> {
     final startAt = formatter.format(widget.session.startsAt);
     final endAt = formatter.format(widget.session.endsAt);
 
-    final day = (widget.session.startsAt.day == 8) ? 1 : 2;
-
     return new Container(
       margin: const EdgeInsets.only(top: 8.0),
       child: new Text(
-        "${Strings.of(context).day(day)} / $startAt - $endAt",
+        "${Strings.of(context).day(widget.session.getDay())} / $startAt - $endAt",
         style: textStyle,
       ),
     );

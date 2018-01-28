@@ -1,3 +1,4 @@
+import 'package:droidkaigi2018/models/room.dart';
 import 'package:droidkaigi2018/models/session.dart';
 import 'package:droidkaigi2018/repository/repository_factory.dart';
 import 'package:droidkaigi2018/ui/sessions/session_item.dart';
@@ -26,10 +27,17 @@ class _RoomSessionsPageState extends State<RoomSessionsPage> {
   void initState() {
     super.initState();
 
-    new RepositoryFactory()
-        .getSessionRepository()
-        .findByRoom(roomId)
-        .then((s) => setSessions(s));
+    if (roomId == Room.ID_ALL) {
+      new RepositoryFactory()
+          .getSessionRepository()
+          .findAll()
+          .then((s) => setSessions(s));
+    } else {
+      new RepositoryFactory()
+          .getSessionRepository()
+          .findByRoom(roomId)
+          .then((s) => setSessions(s));
+    }
   }
 
   @override
