@@ -1,20 +1,22 @@
+import 'dart:async';
+
 import 'package:droidkaigi2018/i18n/strings.dart';
 import 'package:droidkaigi2018/ui/page_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
 
-const String _defaultAccountIcon = 'assets/ic_speaker_placeholder.png';
-const String _defaultAccountBackground = 'assets/img_drawer_header.png';
+const String icDefault = 'assets/ic_default_user.png';
+const String imgHeader = 'assets/img_drawer_header.png';
+
+final googleSignIn = new GoogleSignIn();
 
 class MyDrawer extends StatelessWidget {
   MyDrawer({
     @required this.items,
     this.onTap,
     this.currentIndex: 0,
-    this.accountIconUrl,
-    this.accountName,
-    this.accountEmail,
   })
       : super() {
     assert(items != null);
@@ -26,12 +28,6 @@ class MyDrawer extends StatelessWidget {
   final int currentIndex;
 
   final ValueChanged<int> onTap;
-
-  final String accountIconUrl;
-
-  final String accountName;
-
-  final String accountEmail;
 
   @override
   Widget build(BuildContext context) {
@@ -51,20 +47,29 @@ class MyDrawer extends StatelessWidget {
       );
     }
 
+    _ensureLoggedIn(googleSignIn);
+    GoogleSignInAccount user = googleSignIn.currentUser;
+
     return new Drawer(
       child: new Column(
         children: <Widget>[
           new UserAccountsDrawerHeader(
             accountName: new Text(
-              accountName != null ? accountName : Strings.of(context).appName,
+              user != null ? user.displayName : Strings.of(context).appName,
             ),
             accountEmail: new Text(
-              accountEmail != null ? accountEmail : Strings.of(context).appName,
+              user != null ? user.email : Strings.of(context).appDescription,
+            ),
+            currentAccountPicture: new CircleAvatar(
+              backgroundColor: Colors.white,
+              backgroundImage: user != null
+                  ? new NetworkImage(user.photoUrl)
+                  : new AssetImage(icDefault),
             ),
             decoration: new BoxDecoration(
               image: new DecorationImage(
                 image: new AssetImage(
-                  _defaultAccountBackground,
+                  imgHeader,
                 ),
                 fit: BoxFit.cover,
               ),
@@ -90,5 +95,12 @@ class MyDrawer extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+Future<Null> _ensureLoggedIn(GoogleSignIn googleSignIn) async {
+  GoogleSignInAccount user = googleSignIn.currentUser;
+  if (user == null) {
+    user = await googleSignIn.signInSilently();
   }
 }

@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "about" : MessageLookupByLibrary.simpleMessage("詳細"),
     "access" : MessageLookupByLibrary.simpleMessage("アクセス"),
     "allSessions" : MessageLookupByLibrary.simpleMessage("すべてのセッション"),
+    "appDescription" : MessageLookupByLibrary.simpleMessage("2月8日(木) ー 9日(金)"),
     "appName" : MessageLookupByLibrary.simpleMessage("DroidKaigi 2018"),
     "day" : m0,
     "map" : MessageLookupByLibrary.simpleMessage("マップ"),

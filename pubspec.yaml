@@ -47,6 +47,7 @@ flutter:
       - assets/ic_place_orange_24.png
       - assets/ic_train_orange_24.png
       - assets/ic_googlemap.png
+      - assets/ic_default_user.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

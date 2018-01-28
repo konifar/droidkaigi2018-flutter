@@ -12,6 +12,7 @@ import 'messages_.dart' as messages_;
 import 'messages_messages.dart' as messages_messages;
 // ignore: implementation_imports
 
+
 typedef Future<dynamic> LibraryLoader();
 Map<String, LibraryLoader> _deferredLibraries = {
   '': () => new Future.value(null),
@@ -24,8 +25,6 @@ MessageLookupByLibrary _findExact(localeName) {
       return messages_.messages;
     case 'messages':
       return messages_messages.messages;
-    case '':
-      return messages_.messages;
     default:
       return null;
   }

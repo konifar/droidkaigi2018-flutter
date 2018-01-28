@@ -1,7 +1,12 @@
 {
-  "@@last_modified": "2018-01-28T14:33:44.331367",
+  "@@last_modified": "2018-01-28T19:48:41.415797",
   "appName": "DroidKaigi 2018",
   "@appName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "appDescription": "Feb,08 (Thu) - 09 (Fri)",
+  "@appDescription": {
     "type": "text",
     "placeholders": {}
   },
