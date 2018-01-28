@@ -17,20 +17,26 @@ class DroidKaigiApiImpl implements DroidKaigiApi {
   var _speakerMap = new Map<String, Speaker>();
 
   @override
-  Future<Map<int, Session>> getSessions() async {
-    await _requestAll();
+  Future<Map<int, Session>> getSessions({bool refresh = true}) async {
+    if (refresh || _sessionMap.isEmpty) {
+      await _requestAll();
+    }
     return _sessionMap;
   }
 
   @override
-  Future<Map<String, Speaker>> getSpeakers() async {
-    await _requestAll();
+  Future<Map<String, Speaker>> getSpeakers({bool refresh = true}) async {
+    if (refresh || _speakerMap.isEmpty) {
+      await _requestAll();
+    }
     return _speakerMap;
   }
 
   @override
-  Future<Map<int, Room>> getRooms() async {
-    await _requestAll();
+  Future<Map<int, Room>> getRooms({bool refresh = true}) async {
+    if (refresh || _roomMap.isEmpty) {
+      await _requestAll();
+    }
     return _roomMap;
   }
 

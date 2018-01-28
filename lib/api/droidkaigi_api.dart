@@ -5,9 +5,9 @@ import 'package:droidkaigi2018/models/session.dart';
 import 'package:droidkaigi2018/models/speaker.dart';
 
 abstract class DroidKaigiApi {
-  Future<Map<int, Session>> getSessions();
+  Future<Map<int, Session>> getSessions({bool refresh});
 
-  Future<Map<String, Speaker>> getSpeakers();
+  Future<Map<String, Speaker>> getSpeakers({bool refresh});
 
-  Future<Map<int, Room>> getRooms();
+  Future<Map<int, Room>> getRooms({bool refresh});
 }
