@@ -112,9 +112,9 @@ void main() {
     test('when one id matches', () async {
       // given
       var session1 = new MockSession();
-      when(session1.id).thenReturn(1);
+      when(session1.id).thenReturn("1");
       var session2 = new MockSession();
-      when(session2.id).thenReturn(2);
+      when(session2.id).thenReturn("2");
       when(_api.getSessions())
           .thenReturn(new Future(() => {1: session1, 2: session2}));
       var ids = [1, 3];
@@ -128,9 +128,9 @@ void main() {
     test('when several ids matches', () async {
       // given
       var session1 = new MockSession();
-      when(session1.id).thenReturn(1);
+      when(session1.id).thenReturn("1");
       var session2 = new MockSession();
-      when(session2.id).thenReturn(2);
+      when(session2.id).thenReturn("2");
       when(_api.getSessions())
           .thenReturn(new Future(() => {1: session1, 2: session2}));
       var ids = [1, 2];
