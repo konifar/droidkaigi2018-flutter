@@ -40,6 +40,26 @@ class SessionRepositoryImpl implements SessionRepository {
   }
 
   @override
+  Future<List<Session>> findByIds(List<int> ids) {
+    _cache.values.where((session) => ids.contains(session.id)).toList();
+    if (!isDirty && _cache.isNotEmpty) {
+      var session = _cache.values
+          .where((session) => ids.contains(int.parse(session.id)))
+          .toList();
+      return new Future.value(session);
+    }
+    return _api.getSessions().then((sessions) {
+      _cache = sessions;
+      return sessions.values
+          .where((session) => ids.contains(int.parse(session.id)))
+          .toList();
+    }).then((sessions) {
+      isDirty = false;
+      return sessions;
+    });
+  }
+
+  @override
   Future<List<Session>> findByRoom(int roomId) {
     return findAll().then((sessions) {
       return sessions.where((session) => session.room?.id == roomId).toList();
