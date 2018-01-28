@@ -6,6 +6,7 @@ import 'package:droidkaigi2018/ui/sessions/favorite_button.dart';
 import 'package:droidkaigi2018/ui/sessions/level_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 
@@ -38,6 +39,31 @@ const String _imgHeader = 'assets/img_drawer_header.png';
 class _SessionDetailState extends State<SessionDetail> {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>();
+
+  ScrollController _hideFabController;
+
+  bool _isFabVisible;
+
+  @override
+  void initState() {
+    super.initState();
+    _isFabVisible = true;
+    _hideFabController = new ScrollController();
+    _hideFabController.addListener(() {
+      if (_hideFabController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        setState(() {
+          _isFabVisible = false;
+        });
+      }
+      if (_hideFabController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        setState(() {
+          _isFabVisible = true;
+        });
+      }
+    });
+  }
 
   List<Widget> _buildSpeakerRows(
       List<Speaker> speakers, TextStyle speakerNameStyle) {
@@ -243,27 +269,30 @@ class _SessionDetailState extends State<SessionDetail> {
       child: new Scaffold(
         key: _scaffoldKey,
         body: new CustomScrollView(
+          controller: _hideFabController,
           slivers: [
             _buildAppBar(context),
             _buildBody(),
           ],
         ),
-        floatingActionButton: new FloatingActionButton(
-          child: new FavoriteButton(
-            session: widget.session,
-            favorite: widget.favorite,
-            googleSignIn: widget.googleSignIn,
-            onChanged: (value) {
-              widget.onFavoriteChanged(value);
-              setState(() {
-                widget.favorite = !widget.favorite;
-              });
-            },
-            activeColor: Colors.white,
-            inActiveColor: Colors.white,
-          ),
-          onPressed: () => {},
-        ),
+        floatingActionButton: !_isFabVisible
+            ? null
+            : new FloatingActionButton(
+                child: new FavoriteButton(
+                  session: widget.session,
+                  favorite: widget.favorite,
+                  googleSignIn: widget.googleSignIn,
+                  onChanged: (value) {
+                    widget.onFavoriteChanged(value);
+                    setState(() {
+                      widget.favorite = !widget.favorite;
+                    });
+                  },
+                  activeColor: Colors.white,
+                  inActiveColor: Colors.white,
+                ),
+                onPressed: () => {},
+              ),
       ),
     );
   }
