@@ -36,6 +36,11 @@ class Session {
   final Level level;
   final Language language;
 
+  int getDay() {
+    // DroidKaigi is held on 2/8 (Thu), 2/9 (Fri)
+    return startsAt.day == 8 ? 1 : 2;
+  }
+
   static fromJson(json, Map<int, Map<int, CategoryItem>> categoryMap,
       Map<int, Room> roomMap) {
     var sessionId = json['id'];

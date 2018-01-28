@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:droidkaigi2018/i18n/strings.dart';
 import 'package:droidkaigi2018/models/session.dart';
 import 'package:droidkaigi2018/models/speaker.dart';
 import 'package:droidkaigi2018/repository/repository_factory.dart';
@@ -57,10 +58,13 @@ class _SessionsItemState extends State<SessionsItem> {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final TextStyle timeStyle = theme.textTheme.caption;
+    final TextStyle timeStyle = theme.textTheme.caption.merge(
+      const TextStyle(fontWeight: FontWeight.bold),
+    );
     final TextStyle titleStyle = theme.textTheme.title;
-    final TextStyle descriptionStyle =
-        theme.textTheme.caption.merge(const TextStyle(color: Colors.black));
+    final TextStyle descriptionStyle = theme.textTheme.caption.merge(
+      const TextStyle(color: Colors.black),
+    );
     final TextStyle topicStyle = theme.textTheme.caption;
     final TextStyle speakerNameStyle = theme.textTheme.body2;
 
@@ -83,7 +87,7 @@ class _SessionsItemState extends State<SessionsItem> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   new Text(
-                    "$startAt - $endAt / ${_session.room.name}",
+                    "${Strings.of(context).day(widget.session.getDay())}   $startAt - $endAt / ${_session.room.name}",
                     style: timeStyle,
                   ),
                   new Container(

@@ -305,12 +305,10 @@ class _SessionDetailState extends State<SessionDetail> {
     final startAt = formatter.format(widget.session.startsAt);
     final endAt = formatter.format(widget.session.endsAt);
 
-    final day = (widget.session.startsAt.day == 8) ? 1 : 2;
-
     return new Container(
       margin: const EdgeInsets.only(top: 8.0),
       child: new Text(
-        "${Strings.of(context).day(day)} / $startAt - $endAt",
+        "${Strings.of(context).day(widget.session.getDay())} / $startAt - $endAt",
         style: textStyle,
       ),
     );
