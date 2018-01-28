@@ -4,23 +4,29 @@ import 'package:droidkaigi2018/i18n/strings.dart';
 import 'package:droidkaigi2018/ui/map/Marker.dart';
 import 'package:droidkaigi2018/ui/map/static_map_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const String _icPlace = 'assets/ic_place_orange_24.png';
 const String _icTrain = 'assets/ic_train_orange_24.png';
+const String _icGoogleMap = 'assets/ic_googlemap.png';
+
+const _staticMapApiKey = "AIzaSyBM9V5LdnczVfAC9v6tbG0QanV8tE5lq48";
+const _lat = 35.6957954;
+const _lang = 139.69038920000003;
+
+const _placeUrl = 'https://www.google.com/maps?q=$_lat,$_lang';
+
+https://www.google.com/maps/place/35%C2%B041'44.9%22N+139%C2%B041'25.4%22E/@35.695795,139.6882003,17z/data=!3m1!4b1!4m5!3m4!1s0x0:0x0!8m2!3d35.695795!4d139.690389?hl=ja
 
 class MapPage extends StatelessWidget {
-  static const _STATIC_MAP_API_KEY = "AIzaSyBM9V5LdnczVfAC9v6tbG0QanV8tE5lq48";
-  static const _LAT = 35.6957954;
-  static const _LANG = 139.69038920000003;
-
   @override
   Widget build(BuildContext context) {
     String apiKey = Platform.environment['STATIC_MAP_API_KEY'];
-    if (apiKey == null) apiKey = _STATIC_MAP_API_KEY;
+    if (apiKey == null) apiKey = _staticMapApiKey;
 
     ThemeData theme = Theme.of(context);
     final Marker _marker =
-        new Marker("place", "", _LAT, _LANG, color: theme.accentColor);
+        new Marker("place", "", _lat, _lang, color: theme.accentColor);
 
     final TextStyle titleStyle =
         theme.textTheme.title.merge(new TextStyle(color: Colors.white));
@@ -36,8 +42,32 @@ class MapPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          new Container(
-            child: new Image.network(staticMapUri.toString()),
+          new Stack(
+            children: [
+              new Container(
+                child: new Image.network(staticMapUri.toString()),
+              ),
+              new Positioned(
+                bottom: 16.0,
+                right: 16.0,
+                child: new InkWell(
+                  onTap: _launchMap,
+                  child: new Container(
+                    padding: const EdgeInsets.all(8.0),
+                    width: 36.0,
+                    height: 36.0,
+                    decoration: new BoxDecoration(
+                      color: Colors.grey[100],
+                      borderRadius: new BorderRadius.circular(4.0),
+                      image: new DecorationImage(
+                        image: new AssetImage(_icGoogleMap),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           new Container(
             color: theme.primaryColor,
@@ -107,5 +137,13 @@ class MapPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _launchMap() async {
+    if (await canLaunch(_placeUrl)) {
+      await launch(_placeUrl);
+    } else {
+      throw 'Could not launch $_placeUrl';
+    }
   }
 }
