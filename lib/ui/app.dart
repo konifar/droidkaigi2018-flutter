@@ -4,9 +4,9 @@ import 'package:droidkaigi2018/i18n/strings.dart';
 import 'package:droidkaigi2018/theme.dart';
 import 'package:droidkaigi2018/ui/drawer.dart';
 import 'package:droidkaigi2018/ui/map/map.dart';
+import 'package:droidkaigi2018/ui/myschedule/my_schedule.dart';
 import 'package:droidkaigi2018/ui/page_container.dart';
 import 'package:droidkaigi2018/ui/sessions/all_sessions.dart';
-import 'package:droidkaigi2018/ui/myschedule/my_schedule.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -73,21 +73,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         title: Strings.of(context).allSessions,
         icon: new Icon(Icons.event_note),
         hasTab: true,
-        body: new AllSessionsPage(),
+        body: () => new AllSessionsPage(),
         tickerProvider: this,
       ),
       new PageContainer(
         title: Strings.of(context).mySchedule,
         icon: new Icon(Icons.schedule),
         hasTab: false,
-        body: new MySchedulePage(),
+        body: () => new MySchedulePage(),
         tickerProvider: this,
       ),
       new PageContainer(
         title: Strings.of(context).access,
         icon: new Icon(Icons.map),
         hasTab: false,
-        body: new MapPage(),
+        body: () => new MapPage(),
         tickerProvider: this,
       ),
     ];
