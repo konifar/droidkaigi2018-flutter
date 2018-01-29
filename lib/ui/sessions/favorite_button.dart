@@ -55,8 +55,11 @@ class _FavoriteButtonState extends State<FavoriteButton> {
 
   Future<Null> _toggleFavorite(Session session) async {
     await _ensureLoggedIn(widget.googleSignIn);
-    await _updateFavorite(widget.googleSignIn, session, !widget.favorite);
-    widget.onChanged(!widget.favorite);
+    GoogleSignInAccount user = widget.googleSignIn.currentUser;
+    if (user != null) {
+      await _updateFavorite(widget.googleSignIn, session, !widget.favorite);
+      widget.onChanged(!widget.favorite);
+    }
   }
 
   Future<Null> _ensureLoggedIn(GoogleSignIn googleSignIn) async {

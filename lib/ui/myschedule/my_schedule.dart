@@ -93,7 +93,4 @@ Future<Null> _ensureLoggedIn(GoogleSignIn googleSignIn) async {
   if (user == null) {
     user = await googleSignIn.signInSilently();
   }
-  if (user == null) {
-    await googleSignIn.signIn();
-  }
 }

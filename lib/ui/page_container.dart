@@ -21,14 +21,14 @@ class PageContainer {
   final String title;
   final Widget icon;
   final bool hasTab;
-  final Widget body;
+  final ValueGetter<Widget> body;
   final AnimationController controller;
   CurvedAnimation _animation;
 
   FadeTransition transition() {
     return new FadeTransition(
       opacity: _animation,
-      child: body,
+      child: body(),
     );
   }
 }
