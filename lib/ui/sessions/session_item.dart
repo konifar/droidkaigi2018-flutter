@@ -153,9 +153,13 @@ class _SessionsItemState extends State<SessionsItem> {
   }
 
   Future<Null> fetchFavorite(GoogleSignIn googleSignIn) async {
-    await _ensureLoggedIn(googleSignIn);
     GoogleSignInAccount user = googleSignIn.currentUser;
-
+    if (user == null) {
+      user = await googleSignIn.signInSilently();
+    }
+    if (user == null) {
+      return;
+    }
     new RepositoryFactory()
         .getFavoriteRepository()
         .findAll(user.id)
@@ -188,14 +192,4 @@ List<Widget> _createSpeakerRows(
       ),
     );
   }).toList();
-}
-
-Future<Null> _ensureLoggedIn(GoogleSignIn googleSignIn) async {
-  GoogleSignInAccount user = googleSignIn.currentUser;
-  if (user == null) {
-    user = await googleSignIn.signInSilently();
-  }
-  if (user == null) {
-    await googleSignIn.signIn();
-  }
 }
