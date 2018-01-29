@@ -31,6 +31,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "mySchedule" : MessageLookupByLibrary.simpleMessage("マイスケジュール"),
     "questionnaire" : MessageLookupByLibrary.simpleMessage("アンケート"),
     "settings" : MessageLookupByLibrary.simpleMessage("設定"),
+    "settingsShowPerformanceOverlay" : MessageLookupByLibrary.simpleMessage("パフォーマンスオーバーレイを表示する"),
     "sponsors" : MessageLookupByLibrary.simpleMessage("スポンサー")
   };
 }

@@ -28,10 +28,11 @@ class Strings {
   String get mySchedule => Intl.message("My Schedule", name: "mySchedule");
   String get map => Intl.message("Map", name: "map");
   String get access => Intl.message("Access", name: "access");
-  String settings() => Intl.message("Settings", name: "settings");
-  String sponsors() => Intl.message("Sponsors", name: "sponsors");
-  String questionnaire() => Intl.message("Quesionnaire", name: "questionnaire");
-  String about() => Intl.message("About", name: "about");
+  String get settings => Intl.message("Settings", name: "settings");
+  String get sponsors => Intl.message("Sponsors", name: "sponsors");
+  String get questionnaire =>
+      Intl.message("Quesionnaire", name: "questionnaire");
+  String get about => Intl.message("About", name: "about");
   String day(int day) => Intl.message("DAY$day", name: "day", args: [day]);
   String get mapPlaceName =>
       Intl.message("Bellesalle Shinjuku Grand Conference Center",
@@ -44,4 +45,8 @@ class Strings {
   String get mapNearbyStations => Intl.message(
       "Marunouchi subway line: 3 minutes walk from Nishi Shinjuku Station Gate No.1 Toei Oedo subway line: 7 minutes walk from Tochomae Station Gate E4 Toei Oedo subway line: 11 minutes walk from Shinjuku-Nishiguchi Station Gate D4 JR lines, Marunouchi/Toei Shinjuku/Toei Oedo subway line, Odakyu line, Keio line: 15 minutes walk from Shinjuku Station West Gate",
       name: "mapNearbyStations");
+
+  String get settingsShowPerformanceOverlay =>
+      Intl.message("Show Performance Overlay",
+          name: "settingsShowPerformanceOverlay");
 }

@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-01-28T19:48:41.415797",
+  "@@last_modified": "2018-01-30T00:19:56.025005",
   "appName": "DroidKaigi 2018",
   "@appName": {
     "type": "text",
@@ -74,6 +74,11 @@
   },
   "mapNearbyStations": "Marunouchi subway line: 3 minutes walk from Nishi Shinjuku Station Gate No.1 Toei Oedo subway line: 7 minutes walk from Tochomae Station Gate E4 Toei Oedo subway line: 11 minutes walk from Shinjuku-Nishiguchi Station Gate D4 JR lines, Marunouchi/Toei Shinjuku/Toei Oedo subway line, Odakyu line, Keio line: 15 minutes walk from Shinjuku Station West Gate",
   "@mapNearbyStations": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "settingsShowPerformanceOverlay": "Show Performance Overlay",
+  "@settingsShowPerformanceOverlay": {
     "type": "text",
     "placeholders": {}
   }
