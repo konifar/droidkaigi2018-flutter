@@ -35,6 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "mySchedule" : MessageLookupByLibrary.simpleMessage("My Schedule"),
     "questionnaire" : MessageLookupByLibrary.simpleMessage("Quesionnaire"),
     "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
+    "settingsShowPerformanceOverlay" : MessageLookupByLibrary.simpleMessage("Show Performance Overlay"),
     "sponsors" : MessageLookupByLibrary.simpleMessage("Sponsors")
   };
 }
