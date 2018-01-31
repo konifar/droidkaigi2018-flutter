@@ -14,9 +14,11 @@ This app is built using [Flutter](https://flutter.io/) and [Firebase](https://fi
 Thanks for Android official app is [here](https://github.com/DroidKaigi/conference-app-2018)!
 
 # Features
-<img src="art/ios_sessions.png" width="300" /> <img src="art/ios_session_detail.png" width="300" /> <img src="art/ios_map.png" width="300" /> <img src="art/ios_gif.gif" width="300" />
+## iOS
+<img src="art/ios_sessions.png" width="200" /> <img src="art/ios_session_detail.png" width="200" /> <img src="art/ios_map.png" width="200" /> <img src="art/ios_gif.gif" width="200" />
 
-<img src="art/android_sessions.png" width="300" /> <img src="art/android_session_detail.png" width="300" /> <img src="art/android_map.png" width="300" /> <img src="art/android_gif.gif" width="300" />
+## Android
+<img src="art/android_sessions.jpg" width="200" /> <img src="art/android_session_detail.jpg" width="200" /> <img src="art/android_map.jpg" width="200" /> <img src="art/android_gif.gif" width="200" />
 
 - View all the conference schedule and details of each session
 - Add favorite sessions to My Schedule.
