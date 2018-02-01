@@ -30,13 +30,16 @@ class AllSessionsPageState extends State<AllSessionsPage>
   }
 
   void setRooms(List<Room> rooms) {
-    setState(() => _rooms = rooms);
+    setState(() {
+      _rooms = rooms;
+      
+      _controller?.dispose();
+      _controller = new TabController(vsync: this, length: _rooms.length);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    _controller = new TabController(vsync: this, length: _rooms.length);
-
     if (_rooms.isEmpty) {
       return new Center(
         child: const CircularProgressIndicator(),

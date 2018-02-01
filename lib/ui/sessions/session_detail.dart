@@ -64,6 +64,12 @@ class _SessionDetailState extends State<SessionDetail> {
       }
     });
   }
+  
+  @override
+  void dispose() {
+    _hideFabController.dispose();
+    super.dispose();
+  }
 
   List<Widget> _buildSpeakerRows(
       List<Speaker> speakers, TextStyle speakerNameStyle) {
