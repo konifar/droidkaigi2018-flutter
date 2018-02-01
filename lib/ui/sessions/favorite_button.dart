@@ -30,12 +30,39 @@ class FavoriteButton extends StatefulWidget {
   _FavoriteButtonState createState() => new _FavoriteButtonState();
 }
 
-class _FavoriteButtonState extends State<FavoriteButton> {
+class _FavoriteButtonState extends State<FavoriteButton> with SingleTickerProviderStateMixin {
+  AnimationController animationController;
+  
+  @override
+  void initState() {
+    super.initState();
+    animationController = new AnimationController(
+      value: 1.0,
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+  
+  @override
+  void didUpdateWidget(FavoriteButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.favorite != widget.favorite) {
+      animationController.stop();
+      animationController.forward(from: 0.0);
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
-    return new IconButton(
+    final Widget child = new IconButton(
       icon: (widget.favorite
           ? new Icon(
               Icons.favorite,
@@ -50,6 +77,14 @@ class _FavoriteButtonState extends State<FavoriteButton> {
                   : Colors.grey[500],
             )),
       onPressed: () => _toggleFavorite(widget.session),
+    );
+    
+    return new ScaleTransition(
+      scale: new CurvedAnimation(
+        parent: animationController,
+        curve: Curves.elasticOut,
+      ),
+      child: child,
     );
   }
 
