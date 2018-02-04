@@ -64,7 +64,7 @@ class _SessionDetailState extends State<SessionDetail> {
       }
     });
   }
-  
+
   @override
   void dispose() {
     _hideFabController.dispose();
@@ -323,6 +323,11 @@ class _SessionDetailState extends State<SessionDetail> {
             ),
           ),
           new Container(
+            constraints: new BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).padding.top -
+                    kToolbarHeight -
+                    100),
             margin: const EdgeInsets.only(top: 16.0),
             child: new Text(
               widget.session.description,
