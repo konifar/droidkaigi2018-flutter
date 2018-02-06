@@ -78,6 +78,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   int _currentIndex = 0;
   List<PageContainer> _pages;
 
+  @override
+  void dispose() {
+    if (_pages != null) {
+      for (PageContainer container in _pages) {
+        container.controller.dispose();
+      }
+    }
+    super.dispose();
+  }
+  
   List<PageContainer> _createPages() {
     return <PageContainer>[
       new PageContainer(

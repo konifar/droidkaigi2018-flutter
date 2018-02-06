@@ -28,6 +28,10 @@ class _MySchedulePageState extends State<MySchedulePage> {
     await _ensureLoggedIn(googleSignIn);
     GoogleSignInAccount user = googleSignIn.currentUser;
 
+    if (user == null) {
+      return;
+    }
+
     List<int> favoriteIds = await new RepositoryFactory()
         .getFavoriteRepository()
         .findAll(user.id)
