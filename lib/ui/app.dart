@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
         const Locale('ja', ''),
       ],
       navigatorObservers: [
-        new FirebaseAnalyticsObserver(analytics: widget.analytics),
+        new FirebaseAnalyticsObserver(analytics: analytics),
       ],
       theme: themeData,
       showPerformanceOverlay: _showPerformanceOverlay,
