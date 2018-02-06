@@ -8,6 +8,8 @@ import 'package:droidkaigi2018/ui/myschedule/my_schedule.dart';
 import 'package:droidkaigi2018/ui/page_container.dart';
 import 'package:droidkaigi2018/ui/sessions/all_sessions.dart';
 import 'package:droidkaigi2018/ui/setting/settings.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -26,12 +28,26 @@ class _MyLocalizationsDelegate extends LocalizationsDelegate<Strings> {
 }
 
 class MyApp extends StatefulWidget {
+  static FirebaseAnalytics analytics = new FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer =
+      new FirebaseAnalyticsObserver(analytics: analytics);
+
   @override
-  _MyAppState createState() => new _MyAppState();
+  _MyAppState createState() => new _MyAppState(analytics, observer);
 }
 
 class _MyAppState extends State<MyApp> {
   bool _showPerformanceOverlay = false;
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
+
+  _MyAppState(this.analytics, this.observer);
+
+  @override
+  void initState() {
+    super.initState();
+    analytics.logAppOpen();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +61,9 @@ class _MyAppState extends State<MyApp> {
       supportedLocales: [
         const Locale('en', ''),
         const Locale('ja', ''),
+      ],
+      navigatorObservers: [
+        new FirebaseAnalyticsObserver(analytics: analytics),
       ],
       theme: themeData,
       showPerformanceOverlay: _showPerformanceOverlay,
@@ -87,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     }
     super.dispose();
   }
-  
+
   List<PageContainer> _createPages() {
     return <PageContainer>[
       new PageContainer(
