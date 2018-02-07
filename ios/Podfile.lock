@@ -23,6 +23,9 @@ PODS:
   - Firebase/Firestore (4.8.1):
     - Firebase/Core
     - FirebaseFirestore (= 0.10.0)
+  - firebase_analytics (0.0.1):
+    - Firebase/Core
+    - Flutter
   - firebase_auth (0.0.1):
     - Firebase/Auth
     - Firebase/Core
@@ -102,25 +105,33 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - Protobuf (3.5.0)
+  - shared_preferences (0.0.1):
+    - Flutter
   - url_launcher (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - cloud_firestore (from `/Users/konifar/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-0.2.6/ios`)
+  - firebase_analytics (from `/Users/konifar/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-0.2.2/ios`)
   - firebase_auth (from `/Users/konifar/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.4.3/ios`)
-  - Flutter (from `/Users/konifar/Library/flutter/bin/cache/artifacts/engine/ios`)
+  - Flutter (from `/Users/konifar/Library/flutter/bin/cache/artifacts/engine/ios-release`)
   - google_sign_in (from `/Users/konifar/.pub-cache/hosted/pub.dartlang.org/google_sign_in-2.0.1/ios`)
+  - shared_preferences (from `/Users/konifar/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.3.2/ios`)
   - url_launcher (from `/Users/konifar/.pub-cache/hosted/pub.dartlang.org/url_launcher-2.0.1/ios`)
 
 EXTERNAL SOURCES:
   cloud_firestore:
     :path: /Users/konifar/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-0.2.6/ios
+  firebase_analytics:
+    :path: /Users/konifar/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-0.2.2/ios
   firebase_auth:
     :path: /Users/konifar/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.4.3/ios
   Flutter:
-    :path: /Users/konifar/Library/flutter/bin/cache/artifacts/engine/ios
+    :path: /Users/konifar/Library/flutter/bin/cache/artifacts/engine/ios-release
   google_sign_in:
     :path: /Users/konifar/.pub-cache/hosted/pub.dartlang.org/google_sign_in-2.0.1/ios
+  shared_preferences:
+    :path: /Users/konifar/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.3.2/ios
   url_launcher:
     :path: /Users/konifar/.pub-cache/hosted/pub.dartlang.org/url_launcher-2.0.1/ios
 
@@ -128,6 +139,7 @@ SPEC CHECKSUMS:
   BoringSSL: f3d6b8ce199b9c450a8cfc14895d07a2627fc232
   cloud_firestore: 0699f89e13cb3dfb88f31835447d422f1899b257
   Firebase: 2721056b8885eef90233b03f37be64358d35d262
+  firebase_analytics: e14732ea6575c050175fa09e07358db87842dbe3
   firebase_auth: 6edaa8ccd18c2804c90f57aba1f24e05fc25282f
   FirebaseAnalytics: 617afa8c26b57a0c3f11361b248bc9e17bfd8dfd
   FirebaseAuth: bd2738c5c1e92b108ba5f7f7335908097a4e50bb
@@ -148,6 +160,7 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
+  shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
   url_launcher: 0067ddb8f10d36786672aa0722a21717dba3a298
 
 PODFILE CHECKSUM: 351e02e34b831289961ec3558a535cbd2c4965d2

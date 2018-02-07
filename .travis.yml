@@ -14,6 +14,15 @@ before_script:
   - ./flutter/bin/flutter doctor
 script:
   - ./flutter/bin/flutter test
+
+deploy:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+      openssl aes-256-cbc -k $KEY_JKS_DECRYPT_PASSWORD -d -in android/encrypted-key.jks -out android/key.jks -md md5
+      openssl aes-256-cbc -k $KEY_PROPERTIES_DECRYPT_PASSWORD -d -in android/encrypted-key.properties -out android/key.properties -md md5
+      flutter build apk
+      ./deploy_android_to_dg.sh
+    fi
+
 cache:
   directories:
     - $HOME/.pub-cache
